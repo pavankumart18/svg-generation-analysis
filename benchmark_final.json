@@ -1,0 +1,3030 @@
+{
+  "metadata": {
+    "generated_at": "2026-01-23T02:13:03.386Z",
+    "total_svg_models": 10,
+    "total_prompts": 30,
+    "judges_used": [
+      "qwen-vl-72b",
+      "gemma-27b",
+      "molmo-8b",
+      "gemini-flash-lite",
+      "gemini-flash-lite-preview",
+      "gemini-3-flash",
+      "gemini-flash-image"
+    ],
+    "aggregation_method": "mean across all judges"
+  },
+  "model_rankings": [
+    {
+      "model": "openai-gpt-5.2-pro",
+      "avg_total_score": 83.1,
+      "avg_prompt_adherence": 90.5,
+      "avg_structural_correctness": 84.3,
+      "avg_physical_plausibility": 61,
+      "avg_completeness": 93.3,
+      "avg_visual_coherence": 88.6,
+      "prompts_evaluated": 3,
+      "rank": 1
+    },
+    {
+      "model": "google_gemini-3.0-pro",
+      "avg_total_score": 77.4,
+      "avg_prompt_adherence": 80.4,
+      "avg_structural_correctness": 81.1,
+      "avg_physical_plausibility": 55,
+      "avg_completeness": 88.2,
+      "avg_visual_coherence": 86.9,
+      "prompts_evaluated": 30,
+      "rank": 2
+    },
+    {
+      "model": "openai-gpt-5.1",
+      "avg_total_score": 76.5,
+      "avg_prompt_adherence": 79.3,
+      "avg_structural_correctness": 79.6,
+      "avg_physical_plausibility": 52.3,
+      "avg_completeness": 87.5,
+      "avg_visual_coherence": 86.8,
+      "prompts_evaluated": 30,
+      "rank": 3
+    },
+    {
+      "model": "anthropic_claude-sonnet-4.5",
+      "avg_total_score": 73.6,
+      "avg_prompt_adherence": 76.1,
+      "avg_structural_correctness": 77.2,
+      "avg_physical_plausibility": 50.1,
+      "avg_completeness": 86.1,
+      "avg_visual_coherence": 84.1,
+      "prompts_evaluated": 30,
+      "rank": 4
+    },
+    {
+      "model": "z-ai_glm-4.6",
+      "avg_total_score": 70.8,
+      "avg_prompt_adherence": 70.9,
+      "avg_structural_correctness": 75.5,
+      "avg_physical_plausibility": 48,
+      "avg_completeness": 80.5,
+      "avg_visual_coherence": 84.2,
+      "prompts_evaluated": 30,
+      "rank": 5
+    },
+    {
+      "model": "google_gemini-2.5-pro",
+      "avg_total_score": 70.7,
+      "avg_prompt_adherence": 74,
+      "avg_structural_correctness": 73.4,
+      "avg_physical_plausibility": 46.5,
+      "avg_completeness": 82.7,
+      "avg_visual_coherence": 82.5,
+      "prompts_evaluated": 30,
+      "rank": 6
+    },
+    {
+      "model": "anthropic_claude-opus-4.5",
+      "avg_total_score": 69.2,
+      "avg_prompt_adherence": 70.6,
+      "avg_structural_correctness": 73.2,
+      "avg_physical_plausibility": 45.3,
+      "avg_completeness": 81.3,
+      "avg_visual_coherence": 81.5,
+      "prompts_evaluated": 30,
+      "rank": 7
+    },
+    {
+      "model": "deepseek_deepseek-v3.2-exp",
+      "avg_total_score": 63,
+      "avg_prompt_adherence": 64.2,
+      "avg_structural_correctness": 65.7,
+      "avg_physical_plausibility": 39.4,
+      "avg_completeness": 74.3,
+      "avg_visual_coherence": 77.7,
+      "prompts_evaluated": 30,
+      "rank": 8
+    },
+    {
+      "model": "qwen_qwen3-vl-235b-a22b-thinking",
+      "avg_total_score": 58.7,
+      "avg_prompt_adherence": 58.5,
+      "avg_structural_correctness": 62.1,
+      "avg_physical_plausibility": 37,
+      "avg_completeness": 69.6,
+      "avg_visual_coherence": 73.1,
+      "prompts_evaluated": 30,
+      "rank": 9
+    },
+    {
+      "model": "x-ai_grok-code-fast-1",
+      "avg_total_score": 47.5,
+      "avg_prompt_adherence": 46.1,
+      "avg_structural_correctness": 50.4,
+      "avg_physical_plausibility": 28.1,
+      "avg_completeness": 56.8,
+      "avg_visual_coherence": 63.6,
+      "prompts_evaluated": 30,
+      "rank": 10
+    }
+  ],
+  "prompt_model_scores": [
+    {
+      "prompt": 1,
+      "prompt_text": "Generate an SVG of an octopus operating a pipe organ",
+      "anthropic_claude-opus-4.5": 78.5,
+      "anthropic_claude-sonnet-4.5": 81.8,
+      "deepseek_deepseek-v3.2-exp": 81.1,
+      "google_gemini-2.5-pro": 77.9,
+      "google_gemini-3.0-pro": 84.5,
+      "openai-gpt-5.1": 81.8,
+      "openai-gpt-5.2-pro": 81.6,
+      "qwen_qwen3-vl-235b-a22b-thinking": 80.5,
+      "x-ai_grok-code-fast-1": 68.8,
+      "z-ai_glm-4.6": 84.3
+    },
+    {
+      "prompt": 2,
+      "prompt_text": "Generate an SVG of a giraffe assembling a grandfather clock",
+      "anthropic_claude-opus-4.5": 64.3,
+      "anthropic_claude-sonnet-4.5": 75.8,
+      "deepseek_deepseek-v3.2-exp": 52.7,
+      "google_gemini-2.5-pro": 70,
+      "google_gemini-3.0-pro": 79.1,
+      "openai-gpt-5.1": 71.2,
+      "openai-gpt-5.2-pro": 81,
+      "qwen_qwen3-vl-235b-a22b-thinking": 62.2,
+      "x-ai_grok-code-fast-1": 59.1,
+      "z-ai_glm-4.6": 77.8
+    },
+    {
+      "prompt": 3,
+      "prompt_text": "Generate an SVG of a starfish driving a bulldozer",
+      "anthropic_claude-opus-4.5": 74.2,
+      "anthropic_claude-sonnet-4.5": 73.7,
+      "deepseek_deepseek-v3.2-exp": 67.6,
+      "google_gemini-2.5-pro": 84.6,
+      "google_gemini-3.0-pro": 37.1,
+      "openai-gpt-5.1": 80.8,
+      "openai-gpt-5.2-pro": 86.6,
+      "qwen_qwen3-vl-235b-a22b-thinking": 43.3,
+      "x-ai_grok-code-fast-1": 39,
+      "z-ai_glm-4.6": 70.7
+    },
+    {
+      "prompt": 4,
+      "prompt_text": "Generate an SVG of a moose conducting a carousel",
+      "anthropic_claude-opus-4.5": 67,
+      "anthropic_claude-sonnet-4.5": 70.1,
+      "deepseek_deepseek-v3.2-exp": 37,
+      "google_gemini-2.5-pro": 60.3,
+      "google_gemini-3.0-pro": 75.3,
+      "openai-gpt-5.1": 81.7,
+      "openai-gpt-5.2-pro": null,
+      "qwen_qwen3-vl-235b-a22b-thinking": 23.6,
+      "x-ai_grok-code-fast-1": 35.5,
+      "z-ai_glm-4.6": 56.8
+    },
+    {
+      "prompt": 5,
+      "prompt_text": "Generate an SVG of a flamingo repairing a telescope",
+      "anthropic_claude-opus-4.5": 77.7,
+      "anthropic_claude-sonnet-4.5": 79,
+      "deepseek_deepseek-v3.2-exp": 68,
+      "google_gemini-2.5-pro": 79.4,
+      "google_gemini-3.0-pro": 79.1,
+      "openai-gpt-5.1": 83.9,
+      "openai-gpt-5.2-pro": null,
+      "qwen_qwen3-vl-235b-a22b-thinking": 77.2,
+      "x-ai_grok-code-fast-1": 31.5,
+      "z-ai_glm-4.6": 75.9
+    },
+    {
+      "prompt": 6,
+      "prompt_text": "Generate an SVG of a hedgehog playing an accordion",
+      "anthropic_claude-opus-4.5": 76.7,
+      "anthropic_claude-sonnet-4.5": 80.8,
+      "deepseek_deepseek-v3.2-exp": 53.9,
+      "google_gemini-2.5-pro": 84.1,
+      "google_gemini-3.0-pro": 88.1,
+      "openai-gpt-5.1": 86.3,
+      "openai-gpt-5.2-pro": null,
+      "qwen_qwen3-vl-235b-a22b-thinking": 63.9,
+      "x-ai_grok-code-fast-1": 71.9,
+      "z-ai_glm-4.6": 81.4
+    },
+    {
+      "prompt": 7,
+      "prompt_text": "Generate an SVG of a jellyfish piloting a Ferris wheel",
+      "anthropic_claude-opus-4.5": 78.5,
+      "anthropic_claude-sonnet-4.5": 76.4,
+      "deepseek_deepseek-v3.2-exp": 73.6,
+      "google_gemini-2.5-pro": 73.1,
+      "google_gemini-3.0-pro": 81.8,
+      "openai-gpt-5.1": 81,
+      "openai-gpt-5.2-pro": null,
+      "qwen_qwen3-vl-235b-a22b-thinking": 73.8,
+      "x-ai_grok-code-fast-1": 24.5,
+      "z-ai_glm-4.6": 77.1
+    },
+    {
+      "prompt": 8,
+      "prompt_text": "Generate an SVG of an elephant typing on a typewriter",
+      "anthropic_claude-opus-4.5": 76.8,
+      "anthropic_claude-sonnet-4.5": 79.8,
+      "deepseek_deepseek-v3.2-exp": 54.4,
+      "google_gemini-2.5-pro": 67.1,
+      "google_gemini-3.0-pro": 84.7,
+      "openai-gpt-5.1": 77,
+      "openai-gpt-5.2-pro": null,
+      "qwen_qwen3-vl-235b-a22b-thinking": 67.9,
+      "x-ai_grok-code-fast-1": 27.6,
+      "z-ai_glm-4.6": 75
+    },
+    {
+      "prompt": 9,
+      "prompt_text": "Generate an SVG of a chameleon tuning a grand piano",
+      "anthropic_claude-opus-4.5": 74.6,
+      "anthropic_claude-sonnet-4.5": 73.4,
+      "deepseek_deepseek-v3.2-exp": 72.5,
+      "google_gemini-2.5-pro": 56.3,
+      "google_gemini-3.0-pro": 79.4,
+      "openai-gpt-5.1": 80.1,
+      "openai-gpt-5.2-pro": null,
+      "qwen_qwen3-vl-235b-a22b-thinking": 57.2,
+      "x-ai_grok-code-fast-1": 50.7,
+      "z-ai_glm-4.6": 58.4
+    },
+    {
+      "prompt": 10,
+      "prompt_text": "Generate an SVG of a penguin juggling chainsaws",
+      "anthropic_claude-opus-4.5": 65.5,
+      "anthropic_claude-sonnet-4.5": 73,
+      "deepseek_deepseek-v3.2-exp": 64.7,
+      "google_gemini-2.5-pro": 79.6,
+      "google_gemini-3.0-pro": 82,
+      "openai-gpt-5.1": 72.9,
+      "openai-gpt-5.2-pro": null,
+      "qwen_qwen3-vl-235b-a22b-thinking": 66,
+      "x-ai_grok-code-fast-1": 52.4,
+      "z-ai_glm-4.6": 69.8
+    },
+    {
+      "prompt": 11,
+      "prompt_text": "Generate an SVG of a sloth steering an excavator",
+      "anthropic_claude-opus-4.5": 79.4,
+      "anthropic_claude-sonnet-4.5": 81.9,
+      "deepseek_deepseek-v3.2-exp": 65.8,
+      "google_gemini-2.5-pro": 78.9,
+      "google_gemini-3.0-pro": 83.8,
+      "openai-gpt-5.1": 84,
+      "openai-gpt-5.2-pro": null,
+      "qwen_qwen3-vl-235b-a22b-thinking": 65.9,
+      "x-ai_grok-code-fast-1": 43.9,
+      "z-ai_glm-4.6": 82.2
+    },
+    {
+      "prompt": 12,
+      "prompt_text": "Generate an SVG of a dragonfly balancing a chandelier",
+      "anthropic_claude-opus-4.5": 75.6,
+      "anthropic_claude-sonnet-4.5": 52,
+      "deepseek_deepseek-v3.2-exp": 73.8,
+      "google_gemini-2.5-pro": 78.6,
+      "google_gemini-3.0-pro": 78.4,
+      "openai-gpt-5.1": 75,
+      "openai-gpt-5.2-pro": null,
+      "qwen_qwen3-vl-235b-a22b-thinking": 33.7,
+      "x-ai_grok-code-fast-1": 41.3,
+      "z-ai_glm-4.6": 66
+    },
+    {
+      "prompt": 13,
+      "prompt_text": "Generate an SVG of a rhinoceros painting a lighthouse",
+      "anthropic_claude-opus-4.5": 68.9,
+      "anthropic_claude-sonnet-4.5": 79.9,
+      "deepseek_deepseek-v3.2-exp": 79.8,
+      "google_gemini-2.5-pro": 78.5,
+      "google_gemini-3.0-pro": 82.5,
+      "openai-gpt-5.1": 80.8,
+      "openai-gpt-5.2-pro": null,
+      "qwen_qwen3-vl-235b-a22b-thinking": 58,
+      "x-ai_grok-code-fast-1": 47.2,
+      "z-ai_glm-4.6": 70.7
+    },
+    {
+      "prompt": 14,
+      "prompt_text": "Generate an SVG of a seahorse examining a microscope",
+      "anthropic_claude-opus-4.5": 62.3,
+      "anthropic_claude-sonnet-4.5": 79.7,
+      "deepseek_deepseek-v3.2-exp": 67.1,
+      "google_gemini-2.5-pro": 54.3,
+      "google_gemini-3.0-pro": 68.5,
+      "openai-gpt-5.1": 77.6,
+      "openai-gpt-5.2-pro": null,
+      "qwen_qwen3-vl-235b-a22b-thinking": 37.6,
+      "x-ai_grok-code-fast-1": 22.8,
+      "z-ai_glm-4.6": 81.3
+    },
+    {
+      "prompt": 15,
+      "prompt_text": "Generate an SVG of a peacock spinning a pottery wheel",
+      "anthropic_claude-opus-4.5": 69.5,
+      "anthropic_claude-sonnet-4.5": 79.5,
+      "deepseek_deepseek-v3.2-exp": 46.8,
+      "google_gemini-2.5-pro": 78.4,
+      "google_gemini-3.0-pro": 65.2,
+      "openai-gpt-5.1": 48.8,
+      "openai-gpt-5.2-pro": null,
+      "qwen_qwen3-vl-235b-a22b-thinking": 45.4,
+      "x-ai_grok-code-fast-1": 35.2,
+      "z-ai_glm-4.6": 53.4
+    },
+    {
+      "prompt": 16,
+      "prompt_text": "Generate an SVG of a kangaroo climbing a radio tower",
+      "anthropic_claude-opus-4.5": 75.9,
+      "anthropic_claude-sonnet-4.5": 69.1,
+      "deepseek_deepseek-v3.2-exp": 70.5,
+      "google_gemini-2.5-pro": 47.5,
+      "google_gemini-3.0-pro": 79.8,
+      "openai-gpt-5.1": 78.3,
+      "openai-gpt-5.2-pro": null,
+      "qwen_qwen3-vl-235b-a22b-thinking": 54.4,
+      "x-ai_grok-code-fast-1": 44.5,
+      "z-ai_glm-4.6": 68.1
+    },
+    {
+      "prompt": 17,
+      "prompt_text": "Generate an SVG of a lobster polishing a harp",
+      "anthropic_claude-opus-4.5": 64.9,
+      "anthropic_claude-sonnet-4.5": 70,
+      "deepseek_deepseek-v3.2-exp": 44.8,
+      "google_gemini-2.5-pro": 76.9,
+      "google_gemini-3.0-pro": 79.9,
+      "openai-gpt-5.1": 72.2,
+      "openai-gpt-5.2-pro": null,
+      "qwen_qwen3-vl-235b-a22b-thinking": 39.4,
+      "x-ai_grok-code-fast-1": 21.7,
+      "z-ai_glm-4.6": 73.2
+    },
+    {
+      "prompt": 18,
+      "prompt_text": "Generate an SVG of a porcupine pushing a lawnmower",
+      "anthropic_claude-opus-4.5": 64.4,
+      "anthropic_claude-sonnet-4.5": 75.7,
+      "deepseek_deepseek-v3.2-exp": 70.1,
+      "google_gemini-2.5-pro": 80,
+      "google_gemini-3.0-pro": 81.6,
+      "openai-gpt-5.1": 77.1,
+      "openai-gpt-5.2-pro": null,
+      "qwen_qwen3-vl-235b-a22b-thinking": 55.1,
+      "x-ai_grok-code-fast-1": 61.4,
+      "z-ai_glm-4.6": 69
+    },
+    {
+      "prompt": 19,
+      "prompt_text": "Generate an SVG of a gecko installing a satellite dish",
+      "anthropic_claude-opus-4.5": 60.7,
+      "anthropic_claude-sonnet-4.5": 56.8,
+      "deepseek_deepseek-v3.2-exp": 71.3,
+      "google_gemini-2.5-pro": 65.7,
+      "google_gemini-3.0-pro": 66.9,
+      "openai-gpt-5.1": 67.6,
+      "openai-gpt-5.2-pro": null,
+      "qwen_qwen3-vl-235b-a22b-thinking": 58.7,
+      "x-ai_grok-code-fast-1": 64.7,
+      "z-ai_glm-4.6": 78.4
+    },
+    {
+      "prompt": 20,
+      "prompt_text": "Generate an SVG of an iguana carving a totem pole",
+      "anthropic_claude-opus-4.5": 67.4,
+      "anthropic_claude-sonnet-4.5": 70.6,
+      "deepseek_deepseek-v3.2-exp": 62.9,
+      "google_gemini-2.5-pro": 77,
+      "google_gemini-3.0-pro": 81.2,
+      "openai-gpt-5.1": 83.5,
+      "openai-gpt-5.2-pro": null,
+      "qwen_qwen3-vl-235b-a22b-thinking": 76.7,
+      "x-ai_grok-code-fast-1": 58.8,
+      "z-ai_glm-4.6": 57.1
+    },
+    {
+      "prompt": 21,
+      "prompt_text": "Generate an SVG of an armadillo lifting a drawbridge",
+      "anthropic_claude-opus-4.5": 66,
+      "anthropic_claude-sonnet-4.5": 75,
+      "deepseek_deepseek-v3.2-exp": 60.3,
+      "google_gemini-2.5-pro": 70.6,
+      "google_gemini-3.0-pro": 72.6,
+      "openai-gpt-5.1": 78.6,
+      "openai-gpt-5.2-pro": null,
+      "qwen_qwen3-vl-235b-a22b-thinking": 65,
+      "x-ai_grok-code-fast-1": 65.6,
+      "z-ai_glm-4.6": 75
+    },
+    {
+      "prompt": 22,
+      "prompt_text": "Generate an SVG of a mantis studying a sextant",
+      "anthropic_claude-opus-4.5": 46.2,
+      "anthropic_claude-sonnet-4.5": 67.3,
+      "deepseek_deepseek-v3.2-exp": 55.9,
+      "google_gemini-2.5-pro": 53.6,
+      "google_gemini-3.0-pro": 83.8,
+      "openai-gpt-5.1": 78.2,
+      "openai-gpt-5.2-pro": null,
+      "qwen_qwen3-vl-235b-a22b-thinking": 55.9,
+      "x-ai_grok-code-fast-1": 51.8,
+      "z-ai_glm-4.6": 51.4
+    },
+    {
+      "prompt": 23,
+      "prompt_text": "Generate an SVG of an ostrich pulling a rickshaw",
+      "anthropic_claude-opus-4.5": 62.7,
+      "anthropic_claude-sonnet-4.5": 75.1,
+      "deepseek_deepseek-v3.2-exp": 72.4,
+      "google_gemini-2.5-pro": 79.3,
+      "google_gemini-3.0-pro": 82.6,
+      "openai-gpt-5.1": 77.4,
+      "openai-gpt-5.2-pro": null,
+      "qwen_qwen3-vl-235b-a22b-thinking": 69,
+      "x-ai_grok-code-fast-1": 56,
+      "z-ai_glm-4.6": 70.4
+    },
+    {
+      "prompt": 24,
+      "prompt_text": "Generate an SVG of a squid disassembling a printing press",
+      "anthropic_claude-opus-4.5": 64.3,
+      "anthropic_claude-sonnet-4.5": 63.7,
+      "deepseek_deepseek-v3.2-exp": 71.1,
+      "google_gemini-2.5-pro": 69.8,
+      "google_gemini-3.0-pro": 73,
+      "openai-gpt-5.1": 64.6,
+      "openai-gpt-5.2-pro": null,
+      "qwen_qwen3-vl-235b-a22b-thinking": 67.1,
+      "x-ai_grok-code-fast-1": 48.8,
+      "z-ai_glm-4.6": 70.5
+    },
+    {
+      "prompt": 25,
+      "prompt_text": "Generate an SVG of a butterfly inspecting a steam engine",
+      "anthropic_claude-opus-4.5": 82.5,
+      "anthropic_claude-sonnet-4.5": 82.3,
+      "deepseek_deepseek-v3.2-exp": 52.2,
+      "google_gemini-2.5-pro": 80.6,
+      "google_gemini-3.0-pro": 84.2,
+      "openai-gpt-5.1": 82.6,
+      "openai-gpt-5.2-pro": null,
+      "qwen_qwen3-vl-235b-a22b-thinking": 74.6,
+      "x-ai_grok-code-fast-1": 68.4,
+      "z-ai_glm-4.6": 83
+    },
+    {
+      "prompt": 26,
+      "prompt_text": "Generate an SVG of a crab descending a fire escape",
+      "anthropic_claude-opus-4.5": 77.7,
+      "anthropic_claude-sonnet-4.5": 79.9,
+      "deepseek_deepseek-v3.2-exp": 76.9,
+      "google_gemini-2.5-pro": 81,
+      "google_gemini-3.0-pro": 83.6,
+      "openai-gpt-5.1": 83.4,
+      "openai-gpt-5.2-pro": null,
+      "qwen_qwen3-vl-235b-a22b-thinking": 78.5,
+      "x-ai_grok-code-fast-1": 64.2,
+      "z-ai_glm-4.6": 79.4
+    },
+    {
+      "prompt": 27,
+      "prompt_text": "Generate an SVG of a venus flytrap swallowing a street lamp",
+      "anthropic_claude-opus-4.5": 66.6,
+      "anthropic_claude-sonnet-4.5": 78.6,
+      "deepseek_deepseek-v3.2-exp": 48.3,
+      "google_gemini-2.5-pro": 33.8,
+      "google_gemini-3.0-pro": 76.6,
+      "openai-gpt-5.1": 74.7,
+      "openai-gpt-5.2-pro": null,
+      "qwen_qwen3-vl-235b-a22b-thinking": 38,
+      "x-ai_grok-code-fast-1": 61.3,
+      "z-ai_glm-4.6": 63
+    },
+    {
+      "prompt": 28,
+      "prompt_text": "Generate an SVG of coral cleaning a ship's wheel",
+      "anthropic_claude-opus-4.5": 51.5,
+      "anthropic_claude-sonnet-4.5": 61.7,
+      "deepseek_deepseek-v3.2-exp": 64.6,
+      "google_gemini-2.5-pro": 72.6,
+      "google_gemini-3.0-pro": 76,
+      "openai-gpt-5.1": 73.2,
+      "openai-gpt-5.2-pro": null,
+      "qwen_qwen3-vl-235b-a22b-thinking": 41.5,
+      "x-ai_grok-code-fast-1": 14.1,
+      "z-ai_glm-4.6": 62.6
+    },
+    {
+      "prompt": 29,
+      "prompt_text": "Generate an SVG of a sea anemone threading a loom",
+      "anthropic_claude-opus-4.5": 67.3,
+      "anthropic_claude-sonnet-4.5": 75.6,
+      "deepseek_deepseek-v3.2-exp": 37.5,
+      "google_gemini-2.5-pro": 68.1,
+      "google_gemini-3.0-pro": 78.6,
+      "openai-gpt-5.1": 75,
+      "openai-gpt-5.2-pro": null,
+      "qwen_qwen3-vl-235b-a22b-thinking": 73.3,
+      "x-ai_grok-code-fast-1": 40.3,
+      "z-ai_glm-4.6": 69.6
+    },
+    {
+      "prompt": 30,
+      "prompt_text": "Generate an SVG of an orchid supporting a pergola",
+      "anthropic_claude-opus-4.5": 67.6,
+      "anthropic_claude-sonnet-4.5": 69.7,
+      "deepseek_deepseek-v3.2-exp": 73.9,
+      "google_gemini-2.5-pro": 64.7,
+      "google_gemini-3.0-pro": 71.1,
+      "openai-gpt-5.1": 66.6,
+      "openai-gpt-5.2-pro": null,
+      "qwen_qwen3-vl-235b-a22b-thinking": 58.5,
+      "x-ai_grok-code-fast-1": 51.6,
+      "z-ai_glm-4.6": 73.2
+    }
+  ],
+  "detailed_aggregated_scores": {
+    "anthropic_claude-opus-4.5": {
+      "1": {
+        "prompt_adherence": 83.6,
+        "structural_correctness": 80,
+        "physical_plausibility": 58.6,
+        "completeness": 88.6,
+        "visual_coherence": 85,
+        "total_score": 78.5,
+        "judge_count": 7
+      },
+      "2": {
+        "prompt_adherence": 65,
+        "structural_correctness": 67.1,
+        "physical_plausibility": 44.3,
+        "completeness": 68.6,
+        "visual_coherence": 77.9,
+        "total_score": 64.3,
+        "judge_count": 7
+      },
+      "3": {
+        "prompt_adherence": 80,
+        "structural_correctness": 76.4,
+        "physical_plausibility": 44.3,
+        "completeness": 91.4,
+        "visual_coherence": 84.3,
+        "total_score": 74.2,
+        "judge_count": 7
+      },
+      "4": {
+        "prompt_adherence": 61.4,
+        "structural_correctness": 72.1,
+        "physical_plausibility": 50,
+        "completeness": 71.4,
+        "visual_coherence": 82.1,
+        "total_score": 67,
+        "judge_count": 7
+      },
+      "5": {
+        "prompt_adherence": 80.7,
+        "structural_correctness": 81.4,
+        "physical_plausibility": 53.6,
+        "completeness": 88.6,
+        "visual_coherence": 86.4,
+        "total_score": 77.7,
+        "judge_count": 7
+      },
+      "6": {
+        "prompt_adherence": 82.9,
+        "structural_correctness": 72.9,
+        "physical_plausibility": 55.7,
+        "completeness": 91.4,
+        "visual_coherence": 82.1,
+        "total_score": 76.7,
+        "judge_count": 7
+      },
+      "7": {
+        "prompt_adherence": 85.7,
+        "structural_correctness": 84.3,
+        "physical_plausibility": 48.6,
+        "completeness": 95,
+        "visual_coherence": 86.4,
+        "total_score": 78.5,
+        "judge_count": 7
+      },
+      "8": {
+        "prompt_adherence": 79.3,
+        "structural_correctness": 79.3,
+        "physical_plausibility": 56.4,
+        "completeness": 86.4,
+        "visual_coherence": 88.6,
+        "total_score": 76.8,
+        "judge_count": 7
+      },
+      "9": {
+        "prompt_adherence": 78.6,
+        "structural_correctness": 77.1,
+        "physical_plausibility": 50.7,
+        "completeness": 85.7,
+        "visual_coherence": 82.9,
+        "total_score": 74.6,
+        "judge_count": 7
+      },
+      "10": {
+        "prompt_adherence": 72.1,
+        "structural_correctness": 71.4,
+        "physical_plausibility": 32.9,
+        "completeness": 82.1,
+        "visual_coherence": 80,
+        "total_score": 65.5,
+        "judge_count": 7
+      },
+      "11": {
+        "prompt_adherence": 84.3,
+        "structural_correctness": 80,
+        "physical_plausibility": 55.7,
+        "completeness": 95,
+        "visual_coherence": 86.4,
+        "total_score": 79.4,
+        "judge_count": 7
+      },
+      "12": {
+        "prompt_adherence": 84.3,
+        "structural_correctness": 81.4,
+        "physical_plausibility": 47.1,
+        "completeness": 95.7,
+        "visual_coherence": 84.3,
+        "total_score": 75.6,
+        "judge_count": 7
+      },
+      "13": {
+        "prompt_adherence": 70.7,
+        "structural_correctness": 69.3,
+        "physical_plausibility": 42.9,
+        "completeness": 85.7,
+        "visual_coherence": 79.3,
+        "total_score": 68.9,
+        "judge_count": 7
+      },
+      "14": {
+        "prompt_adherence": 62.9,
+        "structural_correctness": 64.3,
+        "physical_plausibility": 38.6,
+        "completeness": 82.1,
+        "visual_coherence": 75.7,
+        "total_score": 62.3,
+        "judge_count": 7
+      },
+      "15": {
+        "prompt_adherence": 67.1,
+        "structural_correctness": 72.9,
+        "physical_plausibility": 44.3,
+        "completeness": 80,
+        "visual_coherence": 84.3,
+        "total_score": 69.5,
+        "judge_count": 7
+      },
+      "16": {
+        "prompt_adherence": 81.4,
+        "structural_correctness": 78.6,
+        "physical_plausibility": 51.4,
+        "completeness": 92.1,
+        "visual_coherence": 83.6,
+        "total_score": 75.9,
+        "judge_count": 7
+      },
+      "17": {
+        "prompt_adherence": 68.6,
+        "structural_correctness": 65.7,
+        "physical_plausibility": 39.3,
+        "completeness": 82.1,
+        "visual_coherence": 75.7,
+        "total_score": 64.9,
+        "judge_count": 7
+      },
+      "18": {
+        "prompt_adherence": 65,
+        "structural_correctness": 68.6,
+        "physical_plausibility": 44.3,
+        "completeness": 76.4,
+        "visual_coherence": 76.4,
+        "total_score": 64.4,
+        "judge_count": 7
+      },
+      "19": {
+        "prompt_adherence": 57.9,
+        "structural_correctness": 66.4,
+        "physical_plausibility": 40,
+        "completeness": 65.7,
+        "visual_coherence": 79.3,
+        "total_score": 60.7,
+        "judge_count": 7
+      },
+      "20": {
+        "prompt_adherence": 64.3,
+        "structural_correctness": 71.4,
+        "physical_plausibility": 45.7,
+        "completeness": 76.4,
+        "visual_coherence": 78.6,
+        "total_score": 67.4,
+        "judge_count": 7
+      },
+      "21": {
+        "prompt_adherence": 65,
+        "structural_correctness": 69.3,
+        "physical_plausibility": 40,
+        "completeness": 77.1,
+        "visual_coherence": 82.1,
+        "total_score": 66,
+        "judge_count": 7
+      },
+      "22": {
+        "prompt_adherence": 45.7,
+        "structural_correctness": 54.3,
+        "physical_plausibility": 25,
+        "completeness": 56.4,
+        "visual_coherence": 66.4,
+        "total_score": 46.2,
+        "judge_count": 7
+      },
+      "23": {
+        "prompt_adherence": 63.6,
+        "structural_correctness": 66.4,
+        "physical_plausibility": 36.4,
+        "completeness": 85,
+        "visual_coherence": 78.6,
+        "total_score": 62.7,
+        "judge_count": 7
+      },
+      "24": {
+        "prompt_adherence": 65.7,
+        "structural_correctness": 61.4,
+        "physical_plausibility": 45,
+        "completeness": 72.1,
+        "visual_coherence": 78.6,
+        "total_score": 64.3,
+        "judge_count": 7
+      },
+      "25": {
+        "prompt_adherence": 82.9,
+        "structural_correctness": 88.6,
+        "physical_plausibility": 62.1,
+        "completeness": 92.1,
+        "visual_coherence": 90,
+        "total_score": 82.5,
+        "judge_count": 7
+      },
+      "26": {
+        "prompt_adherence": 77.1,
+        "structural_correctness": 80,
+        "physical_plausibility": 60.7,
+        "completeness": 88.6,
+        "visual_coherence": 87.9,
+        "total_score": 77.7,
+        "judge_count": 7
+      },
+      "27": {
+        "prompt_adherence": 64.3,
+        "structural_correctness": 77.1,
+        "physical_plausibility": 32.9,
+        "completeness": 77.9,
+        "visual_coherence": 85.7,
+        "total_score": 66.6,
+        "judge_count": 7
+      },
+      "28": {
+        "prompt_adherence": 44.3,
+        "structural_correctness": 71.4,
+        "physical_plausibility": 28.6,
+        "completeness": 55,
+        "visual_coherence": 72.1,
+        "total_score": 51.5,
+        "judge_count": 7
+      },
+      "29": {
+        "prompt_adherence": 70,
+        "structural_correctness": 72.1,
+        "physical_plausibility": 41.4,
+        "completeness": 77.9,
+        "visual_coherence": 80.7,
+        "total_score": 67.3,
+        "judge_count": 7
+      },
+      "30": {
+        "prompt_adherence": 63.6,
+        "structural_correctness": 75.7,
+        "physical_plausibility": 42.9,
+        "completeness": 77.1,
+        "visual_coherence": 84.3,
+        "total_score": 67.6,
+        "judge_count": 7
+      }
+    },
+    "anthropic_claude-sonnet-4.5": {
+      "1": {
+        "prompt_adherence": 84.3,
+        "structural_correctness": 82.9,
+        "physical_plausibility": 61.4,
+        "completeness": 91.4,
+        "visual_coherence": 87.9,
+        "total_score": 81.8,
+        "judge_count": 7
+      },
+      "2": {
+        "prompt_adherence": 77.1,
+        "structural_correctness": 78.6,
+        "physical_plausibility": 53.6,
+        "completeness": 84.3,
+        "visual_coherence": 83.6,
+        "total_score": 75.8,
+        "judge_count": 7
+      },
+      "3": {
+        "prompt_adherence": 81.4,
+        "structural_correctness": 77.1,
+        "physical_plausibility": 41.4,
+        "completeness": 95,
+        "visual_coherence": 87.9,
+        "total_score": 73.7,
+        "judge_count": 7
+      },
+      "4": {
+        "prompt_adherence": 70,
+        "structural_correctness": 70.7,
+        "physical_plausibility": 50,
+        "completeness": 78.6,
+        "visual_coherence": 79.3,
+        "total_score": 70.1,
+        "judge_count": 7
+      },
+      "5": {
+        "prompt_adherence": 85.7,
+        "structural_correctness": 77.9,
+        "physical_plausibility": 57.1,
+        "completeness": 89.3,
+        "visual_coherence": 84.3,
+        "total_score": 79,
+        "judge_count": 7
+      },
+      "6": {
+        "prompt_adherence": 88.6,
+        "structural_correctness": 83.6,
+        "physical_plausibility": 57.1,
+        "completeness": 95,
+        "visual_coherence": 87.9,
+        "total_score": 80.8,
+        "judge_count": 7
+      },
+      "7": {
+        "prompt_adherence": 87.1,
+        "structural_correctness": 77.9,
+        "physical_plausibility": 47.1,
+        "completeness": 95.7,
+        "visual_coherence": 81.4,
+        "total_score": 76.4,
+        "judge_count": 7
+      },
+      "8": {
+        "prompt_adherence": 87.9,
+        "structural_correctness": 82.1,
+        "physical_plausibility": 57.1,
+        "completeness": 95,
+        "visual_coherence": 86.4,
+        "total_score": 79.8,
+        "judge_count": 7
+      },
+      "9": {
+        "prompt_adherence": 80,
+        "structural_correctness": 75.7,
+        "physical_plausibility": 45.7,
+        "completeness": 87.9,
+        "visual_coherence": 84.3,
+        "total_score": 73.4,
+        "judge_count": 7
+      },
+      "10": {
+        "prompt_adherence": 78.6,
+        "structural_correctness": 79.3,
+        "physical_plausibility": 42.9,
+        "completeness": 90.7,
+        "visual_coherence": 84.3,
+        "total_score": 73,
+        "judge_count": 7
+      },
+      "11": {
+        "prompt_adherence": 88.6,
+        "structural_correctness": 78.6,
+        "physical_plausibility": 60.7,
+        "completeness": 95,
+        "visual_coherence": 85.7,
+        "total_score": 81.9,
+        "judge_count": 7
+      },
+      "12": {
+        "prompt_adherence": 45.7,
+        "structural_correctness": 69.3,
+        "physical_plausibility": 27.1,
+        "completeness": 57.1,
+        "visual_coherence": 78.6,
+        "total_score": 52,
+        "judge_count": 7
+      },
+      "13": {
+        "prompt_adherence": 84.3,
+        "structural_correctness": 78.6,
+        "physical_plausibility": 60,
+        "completeness": 95.7,
+        "visual_coherence": 84.3,
+        "total_score": 79.9,
+        "judge_count": 7
+      },
+      "14": {
+        "prompt_adherence": 85,
+        "structural_correctness": 81.4,
+        "physical_plausibility": 54.3,
+        "completeness": 95,
+        "visual_coherence": 85.7,
+        "total_score": 79.7,
+        "judge_count": 7
+      },
+      "15": {
+        "prompt_adherence": 82.9,
+        "structural_correctness": 80,
+        "physical_plausibility": 57.9,
+        "completeness": 92.9,
+        "visual_coherence": 87.1,
+        "total_score": 79.5,
+        "judge_count": 7
+      },
+      "16": {
+        "prompt_adherence": 74.3,
+        "structural_correctness": 70.7,
+        "physical_plausibility": 44.3,
+        "completeness": 89.3,
+        "visual_coherence": 80.7,
+        "total_score": 69.1,
+        "judge_count": 7
+      },
+      "17": {
+        "prompt_adherence": 74.3,
+        "structural_correctness": 71.4,
+        "physical_plausibility": 45,
+        "completeness": 84.3,
+        "visual_coherence": 79.3,
+        "total_score": 70,
+        "judge_count": 7
+      },
+      "18": {
+        "prompt_adherence": 78.6,
+        "structural_correctness": 76.4,
+        "physical_plausibility": 53.6,
+        "completeness": 87.1,
+        "visual_coherence": 86.4,
+        "total_score": 75.7,
+        "judge_count": 7
+      },
+      "19": {
+        "prompt_adherence": 47.1,
+        "structural_correctness": 71.4,
+        "physical_plausibility": 35.7,
+        "completeness": 62.1,
+        "visual_coherence": 81.4,
+        "total_score": 56.8,
+        "judge_count": 7
+      },
+      "20": {
+        "prompt_adherence": 70,
+        "structural_correctness": 72.1,
+        "physical_plausibility": 51.4,
+        "completeness": 82.1,
+        "visual_coherence": 78.6,
+        "total_score": 70.6,
+        "judge_count": 7
+      },
+      "21": {
+        "prompt_adherence": 80,
+        "structural_correctness": 78.6,
+        "physical_plausibility": 45.7,
+        "completeness": 92.1,
+        "visual_coherence": 85.7,
+        "total_score": 75,
+        "judge_count": 7
+      },
+      "22": {
+        "prompt_adherence": 65.7,
+        "structural_correctness": 69.3,
+        "physical_plausibility": 44.3,
+        "completeness": 79.3,
+        "visual_coherence": 78.6,
+        "total_score": 67.3,
+        "judge_count": 7
+      },
+      "23": {
+        "prompt_adherence": 84.3,
+        "structural_correctness": 72.9,
+        "physical_plausibility": 50.7,
+        "completeness": 95.7,
+        "visual_coherence": 82.1,
+        "total_score": 75.1,
+        "judge_count": 7
+      },
+      "24": {
+        "prompt_adherence": 63.6,
+        "structural_correctness": 67.1,
+        "physical_plausibility": 37.9,
+        "completeness": 72.1,
+        "visual_coherence": 81.4,
+        "total_score": 63.7,
+        "judge_count": 7
+      },
+      "25": {
+        "prompt_adherence": 83.6,
+        "structural_correctness": 83.6,
+        "physical_plausibility": 61.4,
+        "completeness": 95,
+        "visual_coherence": 90.7,
+        "total_score": 82.3,
+        "judge_count": 7
+      },
+      "26": {
+        "prompt_adherence": 81.4,
+        "structural_correctness": 84.3,
+        "physical_plausibility": 59.3,
+        "completeness": 92.9,
+        "visual_coherence": 90,
+        "total_score": 79.9,
+        "judge_count": 7
+      },
+      "27": {
+        "prompt_adherence": 82.9,
+        "structural_correctness": 82.1,
+        "physical_plausibility": 52.9,
+        "completeness": 94.3,
+        "visual_coherence": 87.1,
+        "total_score": 78.6,
+        "judge_count": 7
+      },
+      "28": {
+        "prompt_adherence": 51.4,
+        "structural_correctness": 84.3,
+        "physical_plausibility": 40,
+        "completeness": 57.9,
+        "visual_coherence": 80.7,
+        "total_score": 61.7,
+        "judge_count": 7
+      },
+      "29": {
+        "prompt_adherence": 77.9,
+        "structural_correctness": 78.6,
+        "physical_plausibility": 52.9,
+        "completeness": 88.6,
+        "visual_coherence": 85,
+        "total_score": 75.6,
+        "judge_count": 7
+      },
+      "30": {
+        "prompt_adherence": 62.1,
+        "structural_correctness": 78.6,
+        "physical_plausibility": 54.3,
+        "completeness": 72.9,
+        "visual_coherence": 87.1,
+        "total_score": 69.7,
+        "judge_count": 7
+      }
+    },
+    "deepseek_deepseek-v3.2-exp": {
+      "1": {
+        "prompt_adherence": 87.1,
+        "structural_correctness": 78.6,
+        "physical_plausibility": 60,
+        "completeness": 92.1,
+        "visual_coherence": 86.4,
+        "total_score": 81.1,
+        "judge_count": 7
+      },
+      "2": {
+        "prompt_adherence": 52.1,
+        "structural_correctness": 57.9,
+        "physical_plausibility": 32.9,
+        "completeness": 57.9,
+        "visual_coherence": 68.6,
+        "total_score": 52.7,
+        "judge_count": 7
+      },
+      "3": {
+        "prompt_adherence": 76.4,
+        "structural_correctness": 67.9,
+        "physical_plausibility": 35,
+        "completeness": 85.7,
+        "visual_coherence": 80,
+        "total_score": 67.6,
+        "judge_count": 7
+      },
+      "4": {
+        "prompt_adherence": 32.9,
+        "structural_correctness": 45.7,
+        "physical_plausibility": 16.4,
+        "completeness": 37.9,
+        "visual_coherence": 62.9,
+        "total_score": 37,
+        "judge_count": 7
+      },
+      "5": {
+        "prompt_adherence": 66.4,
+        "structural_correctness": 67.9,
+        "physical_plausibility": 42.9,
+        "completeness": 79.3,
+        "visual_coherence": 81.4,
+        "total_score": 68,
+        "judge_count": 7
+      },
+      "6": {
+        "prompt_adherence": 55.7,
+        "structural_correctness": 50,
+        "physical_plausibility": 33.6,
+        "completeness": 65,
+        "visual_coherence": 67.9,
+        "total_score": 53.9,
+        "judge_count": 7
+      },
+      "7": {
+        "prompt_adherence": 77.9,
+        "structural_correctness": 82.1,
+        "physical_plausibility": 40,
+        "completeness": 92.1,
+        "visual_coherence": 88.6,
+        "total_score": 73.6,
+        "judge_count": 7
+      },
+      "8": {
+        "prompt_adherence": 53.6,
+        "structural_correctness": 61.4,
+        "physical_plausibility": 32.9,
+        "completeness": 62.1,
+        "visual_coherence": 77.1,
+        "total_score": 54.4,
+        "judge_count": 7
+      },
+      "9": {
+        "prompt_adherence": 74.3,
+        "structural_correctness": 74.3,
+        "physical_plausibility": 47.9,
+        "completeness": 83.6,
+        "visual_coherence": 82.9,
+        "total_score": 72.5,
+        "judge_count": 7
+      },
+      "10": {
+        "prompt_adherence": 70,
+        "structural_correctness": 72.1,
+        "physical_plausibility": 37.1,
+        "completeness": 85,
+        "visual_coherence": 76.4,
+        "total_score": 64.7,
+        "judge_count": 7
+      },
+      "11": {
+        "prompt_adherence": 69.3,
+        "structural_correctness": 65.7,
+        "physical_plausibility": 40.7,
+        "completeness": 82.9,
+        "visual_coherence": 77.1,
+        "total_score": 65.8,
+        "judge_count": 7
+      },
+      "12": {
+        "prompt_adherence": 77.9,
+        "structural_correctness": 78.6,
+        "physical_plausibility": 47.1,
+        "completeness": 91.4,
+        "visual_coherence": 84.3,
+        "total_score": 73.8,
+        "judge_count": 7
+      },
+      "13": {
+        "prompt_adherence": 87.1,
+        "structural_correctness": 78.6,
+        "physical_plausibility": 55.7,
+        "completeness": 91.4,
+        "visual_coherence": 85.7,
+        "total_score": 79.8,
+        "judge_count": 7
+      },
+      "14": {
+        "prompt_adherence": 69.3,
+        "structural_correctness": 67.1,
+        "physical_plausibility": 43.6,
+        "completeness": 85,
+        "visual_coherence": 82.1,
+        "total_score": 67.1,
+        "judge_count": 7
+      },
+      "15": {
+        "prompt_adherence": 35.7,
+        "structural_correctness": 61.4,
+        "physical_plausibility": 28.6,
+        "completeness": 45.7,
+        "visual_coherence": 76.4,
+        "total_score": 46.8,
+        "judge_count": 7
+      },
+      "16": {
+        "prompt_adherence": 73.6,
+        "structural_correctness": 70.7,
+        "physical_plausibility": 44.3,
+        "completeness": 90.7,
+        "visual_coherence": 82.9,
+        "total_score": 70.5,
+        "judge_count": 7
+      },
+      "17": {
+        "prompt_adherence": 38.6,
+        "structural_correctness": 52.1,
+        "physical_plausibility": 27.9,
+        "completeness": 45.7,
+        "visual_coherence": 68.6,
+        "total_score": 44.8,
+        "judge_count": 7
+      },
+      "18": {
+        "prompt_adherence": 74.3,
+        "structural_correctness": 68.6,
+        "physical_plausibility": 44.3,
+        "completeness": 87.1,
+        "visual_coherence": 84.3,
+        "total_score": 70.1,
+        "judge_count": 7
+      },
+      "19": {
+        "prompt_adherence": 75.7,
+        "structural_correctness": 74.3,
+        "physical_plausibility": 41.4,
+        "completeness": 82.9,
+        "visual_coherence": 84.3,
+        "total_score": 71.3,
+        "judge_count": 7
+      },
+      "20": {
+        "prompt_adherence": 59.3,
+        "structural_correctness": 67.9,
+        "physical_plausibility": 41.4,
+        "completeness": 72.1,
+        "visual_coherence": 77.1,
+        "total_score": 62.9,
+        "judge_count": 7
+      },
+      "21": {
+        "prompt_adherence": 63.6,
+        "structural_correctness": 60,
+        "physical_plausibility": 34.3,
+        "completeness": 75.7,
+        "visual_coherence": 71.4,
+        "total_score": 60.3,
+        "judge_count": 7
+      },
+      "22": {
+        "prompt_adherence": 57.1,
+        "structural_correctness": 52.9,
+        "physical_plausibility": 37.9,
+        "completeness": 68.6,
+        "visual_coherence": 71.4,
+        "total_score": 55.9,
+        "judge_count": 7
+      },
+      "23": {
+        "prompt_adherence": 77.9,
+        "structural_correctness": 69.3,
+        "physical_plausibility": 47.9,
+        "completeness": 90.7,
+        "visual_coherence": 82.1,
+        "total_score": 72.4,
+        "judge_count": 7
+      },
+      "24": {
+        "prompt_adherence": 77.9,
+        "structural_correctness": 67.1,
+        "physical_plausibility": 45.7,
+        "completeness": 80.7,
+        "visual_coherence": 82.1,
+        "total_score": 71.1,
+        "judge_count": 7
+      },
+      "25": {
+        "prompt_adherence": 55.7,
+        "structural_correctness": 47.9,
+        "physical_plausibility": 30.7,
+        "completeness": 65,
+        "visual_coherence": 62.1,
+        "total_score": 52.2,
+        "judge_count": 7
+      },
+      "26": {
+        "prompt_adherence": 78.6,
+        "structural_correctness": 77.9,
+        "physical_plausibility": 57.1,
+        "completeness": 85.7,
+        "visual_coherence": 86.4,
+        "total_score": 76.9,
+        "judge_count": 7
+      },
+      "27": {
+        "prompt_adherence": 40,
+        "structural_correctness": 67.1,
+        "physical_plausibility": 21.4,
+        "completeness": 52.9,
+        "visual_coherence": 78.6,
+        "total_score": 48.3,
+        "judge_count": 7
+      },
+      "28": {
+        "prompt_adherence": 60,
+        "structural_correctness": 69.3,
+        "physical_plausibility": 42.9,
+        "completeness": 72.1,
+        "visual_coherence": 81.4,
+        "total_score": 64.6,
+        "judge_count": 7
+      },
+      "29": {
+        "prompt_adherence": 32.9,
+        "structural_correctness": 41.4,
+        "physical_plausibility": 19.3,
+        "completeness": 40.7,
+        "visual_coherence": 55,
+        "total_score": 37.5,
+        "judge_count": 7
+      },
+      "30": {
+        "prompt_adherence": 74.2,
+        "structural_correctness": 75.8,
+        "physical_plausibility": 52.5,
+        "completeness": 82.5,
+        "visual_coherence": 85.8,
+        "total_score": 73.9,
+        "judge_count": 6
+      }
+    },
+    "google_gemini-2.5-pro": {
+      "1": {
+        "prompt_adherence": 82.1,
+        "structural_correctness": 78.6,
+        "physical_plausibility": 53.6,
+        "completeness": 89.3,
+        "visual_coherence": 86.4,
+        "total_score": 77.9,
+        "judge_count": 7
+      },
+      "2": {
+        "prompt_adherence": 72.9,
+        "structural_correctness": 72.9,
+        "physical_plausibility": 42.9,
+        "completeness": 83.6,
+        "visual_coherence": 82.9,
+        "total_score": 70,
+        "judge_count": 7
+      },
+      "3": {
+        "prompt_adherence": 92.9,
+        "structural_correctness": 85.7,
+        "physical_plausibility": 56.4,
+        "completeness": 97.1,
+        "visual_coherence": 92.9,
+        "total_score": 84.6,
+        "judge_count": 7
+      },
+      "4": {
+        "prompt_adherence": 67.1,
+        "structural_correctness": 60.7,
+        "physical_plausibility": 34.3,
+        "completeness": 67.1,
+        "visual_coherence": 70,
+        "total_score": 60.3,
+        "judge_count": 7
+      },
+      "5": {
+        "prompt_adherence": 80.7,
+        "structural_correctness": 83.6,
+        "physical_plausibility": 57.1,
+        "completeness": 91.4,
+        "visual_coherence": 88.6,
+        "total_score": 79.4,
+        "judge_count": 7
+      },
+      "6": {
+        "prompt_adherence": 88.6,
+        "structural_correctness": 82.9,
+        "physical_plausibility": 66.4,
+        "completeness": 93.6,
+        "visual_coherence": 90,
+        "total_score": 84.1,
+        "judge_count": 7
+      },
+      "7": {
+        "prompt_adherence": 71.4,
+        "structural_correctness": 85.7,
+        "physical_plausibility": 45,
+        "completeness": 86.4,
+        "visual_coherence": 90,
+        "total_score": 73.1,
+        "judge_count": 7
+      },
+      "8": {
+        "prompt_adherence": 68.6,
+        "structural_correctness": 69.3,
+        "physical_plausibility": 38.6,
+        "completeness": 73.6,
+        "visual_coherence": 81.4,
+        "total_score": 67.1,
+        "judge_count": 7
+      },
+      "9": {
+        "prompt_adherence": 60,
+        "structural_correctness": 56.4,
+        "physical_plausibility": 30,
+        "completeness": 69.3,
+        "visual_coherence": 74.3,
+        "total_score": 56.3,
+        "judge_count": 7
+      },
+      "10": {
+        "prompt_adherence": 88.6,
+        "structural_correctness": 85.7,
+        "physical_plausibility": 45.7,
+        "completeness": 96.4,
+        "visual_coherence": 87.9,
+        "total_score": 79.6,
+        "judge_count": 7
+      },
+      "11": {
+        "prompt_adherence": 80,
+        "structural_correctness": 80,
+        "physical_plausibility": 55,
+        "completeness": 92.1,
+        "visual_coherence": 89.3,
+        "total_score": 78.9,
+        "judge_count": 7
+      },
+      "12": {
+        "prompt_adherence": 87.9,
+        "structural_correctness": 81.4,
+        "physical_plausibility": 49.3,
+        "completeness": 96.4,
+        "visual_coherence": 87.9,
+        "total_score": 78.6,
+        "judge_count": 7
+      },
+      "13": {
+        "prompt_adherence": 86.7,
+        "structural_correctness": 80,
+        "physical_plausibility": 51.7,
+        "completeness": 95,
+        "visual_coherence": 85.8,
+        "total_score": 78.5,
+        "judge_count": 6
+      },
+      "14": {
+        "prompt_adherence": 57.1,
+        "structural_correctness": 52.1,
+        "physical_plausibility": 33.6,
+        "completeness": 70,
+        "visual_coherence": 71.4,
+        "total_score": 54.3,
+        "judge_count": 7
+      },
+      "15": {
+        "prompt_adherence": 80.7,
+        "structural_correctness": 77.9,
+        "physical_plausibility": 54.3,
+        "completeness": 90.7,
+        "visual_coherence": 85.7,
+        "total_score": 78.4,
+        "judge_count": 7
+      },
+      "16": {
+        "prompt_adherence": 51.4,
+        "structural_correctness": 42.9,
+        "physical_plausibility": 25.7,
+        "completeness": 69.3,
+        "visual_coherence": 65.7,
+        "total_score": 47.5,
+        "judge_count": 7
+      },
+      "17": {
+        "prompt_adherence": 83.6,
+        "structural_correctness": 82.1,
+        "physical_plausibility": 50,
+        "completeness": 90.7,
+        "visual_coherence": 85.7,
+        "total_score": 76.9,
+        "judge_count": 7
+      },
+      "18": {
+        "prompt_adherence": 82.9,
+        "structural_correctness": 81.4,
+        "physical_plausibility": 57.1,
+        "completeness": 95,
+        "visual_coherence": 87.9,
+        "total_score": 80,
+        "judge_count": 7
+      },
+      "19": {
+        "prompt_adherence": 69.3,
+        "structural_correctness": 72.1,
+        "physical_plausibility": 42.1,
+        "completeness": 73.6,
+        "visual_coherence": 80.7,
+        "total_score": 65.7,
+        "judge_count": 7
+      },
+      "20": {
+        "prompt_adherence": 80.7,
+        "structural_correctness": 78.6,
+        "physical_plausibility": 59.3,
+        "completeness": 85.7,
+        "visual_coherence": 84.3,
+        "total_score": 77,
+        "judge_count": 7
+      },
+      "21": {
+        "prompt_adherence": 79.3,
+        "structural_correctness": 72.9,
+        "physical_plausibility": 42.9,
+        "completeness": 87.1,
+        "visual_coherence": 84.3,
+        "total_score": 70.6,
+        "judge_count": 7
+      },
+      "22": {
+        "prompt_adherence": 58.6,
+        "structural_correctness": 47.9,
+        "physical_plausibility": 36.4,
+        "completeness": 70,
+        "visual_coherence": 62.9,
+        "total_score": 53.6,
+        "judge_count": 7
+      },
+      "23": {
+        "prompt_adherence": 87.1,
+        "structural_correctness": 78.6,
+        "physical_plausibility": 52.9,
+        "completeness": 94.3,
+        "visual_coherence": 87.9,
+        "total_score": 79.3,
+        "judge_count": 7
+      },
+      "24": {
+        "prompt_adherence": 70,
+        "structural_correctness": 73.6,
+        "physical_plausibility": 43.6,
+        "completeness": 77.1,
+        "visual_coherence": 85.7,
+        "total_score": 69.8,
+        "judge_count": 7
+      },
+      "25": {
+        "prompt_adherence": 82.1,
+        "structural_correctness": 79.3,
+        "physical_plausibility": 67.9,
+        "completeness": 91.4,
+        "visual_coherence": 83.6,
+        "total_score": 80.6,
+        "judge_count": 7
+      },
+      "26": {
+        "prompt_adherence": 87.1,
+        "structural_correctness": 82.1,
+        "physical_plausibility": 57.1,
+        "completeness": 95,
+        "visual_coherence": 87.1,
+        "total_score": 81,
+        "judge_count": 7
+      },
+      "27": {
+        "prompt_adherence": 22.9,
+        "structural_correctness": 53.6,
+        "physical_plausibility": 14.3,
+        "completeness": 24.3,
+        "visual_coherence": 64.3,
+        "total_score": 33.8,
+        "judge_count": 7
+      },
+      "28": {
+        "prompt_adherence": 67.1,
+        "structural_correctness": 84.3,
+        "physical_plausibility": 56.4,
+        "completeness": 77.1,
+        "visual_coherence": 87.1,
+        "total_score": 72.6,
+        "judge_count": 7
+      },
+      "29": {
+        "prompt_adherence": 70.7,
+        "structural_correctness": 72.9,
+        "physical_plausibility": 39.3,
+        "completeness": 77.9,
+        "visual_coherence": 82.9,
+        "total_score": 68.1,
+        "judge_count": 7
+      },
+      "30": {
+        "prompt_adherence": 62.9,
+        "structural_correctness": 67.9,
+        "physical_plausibility": 37.1,
+        "completeness": 81.4,
+        "visual_coherence": 79.3,
+        "total_score": 64.7,
+        "judge_count": 7
+      }
+    },
+    "google_gemini-3.0-pro": {
+      "1": {
+        "prompt_adherence": 91.4,
+        "structural_correctness": 85,
+        "physical_plausibility": 65,
+        "completeness": 95.7,
+        "visual_coherence": 89.3,
+        "total_score": 84.5,
+        "judge_count": 7
+      },
+      "2": {
+        "prompt_adherence": 82.9,
+        "structural_correctness": 83.6,
+        "physical_plausibility": 57.1,
+        "completeness": 83.6,
+        "visual_coherence": 87.1,
+        "total_score": 79.1,
+        "judge_count": 7
+      },
+      "3": {
+        "prompt_adherence": 21.4,
+        "structural_correctness": 68.6,
+        "physical_plausibility": 44.3,
+        "completeness": 21.4,
+        "visual_coherence": 73.6,
+        "total_score": 37.1,
+        "judge_count": 7
+      },
+      "4": {
+        "prompt_adherence": 76.4,
+        "structural_correctness": 77.9,
+        "physical_plausibility": 55.7,
+        "completeness": 79.3,
+        "visual_coherence": 85.7,
+        "total_score": 75.3,
+        "judge_count": 7
+      },
+      "5": {
+        "prompt_adherence": 76.4,
+        "structural_correctness": 86.4,
+        "physical_plausibility": 58.6,
+        "completeness": 87.1,
+        "visual_coherence": 91.4,
+        "total_score": 79.1,
+        "judge_count": 7
+      },
+      "6": {
+        "prompt_adherence": 90.7,
+        "structural_correctness": 87.9,
+        "physical_plausibility": 71.4,
+        "completeness": 97.1,
+        "visual_coherence": 92.9,
+        "total_score": 88.1,
+        "judge_count": 7
+      },
+      "7": {
+        "prompt_adherence": 85,
+        "structural_correctness": 85,
+        "physical_plausibility": 56.4,
+        "completeness": 91.4,
+        "visual_coherence": 90,
+        "total_score": 81.8,
+        "judge_count": 7
+      },
+      "8": {
+        "prompt_adherence": 90,
+        "structural_correctness": 84.3,
+        "physical_plausibility": 64.3,
+        "completeness": 95,
+        "visual_coherence": 89.3,
+        "total_score": 84.7,
+        "judge_count": 7
+      },
+      "9": {
+        "prompt_adherence": 84.3,
+        "structural_correctness": 80,
+        "physical_plausibility": 57.1,
+        "completeness": 90.7,
+        "visual_coherence": 86.4,
+        "total_score": 79.4,
+        "judge_count": 7
+      },
+      "10": {
+        "prompt_adherence": 90,
+        "structural_correctness": 88.6,
+        "physical_plausibility": 51.4,
+        "completeness": 97.1,
+        "visual_coherence": 87.9,
+        "total_score": 82,
+        "judge_count": 7
+      },
+      "11": {
+        "prompt_adherence": 90.7,
+        "structural_correctness": 84.3,
+        "physical_plausibility": 59.3,
+        "completeness": 96.4,
+        "visual_coherence": 89.3,
+        "total_score": 83.8,
+        "judge_count": 7
+      },
+      "12": {
+        "prompt_adherence": 87.1,
+        "structural_correctness": 86.4,
+        "physical_plausibility": 44.3,
+        "completeness": 97.1,
+        "visual_coherence": 89.3,
+        "total_score": 78.4,
+        "judge_count": 7
+      },
+      "13": {
+        "prompt_adherence": 85,
+        "structural_correctness": 85,
+        "physical_plausibility": 61.4,
+        "completeness": 95.7,
+        "visual_coherence": 87.1,
+        "total_score": 82.5,
+        "judge_count": 7
+      },
+      "14": {
+        "prompt_adherence": 70,
+        "structural_correctness": 72.9,
+        "physical_plausibility": 45.7,
+        "completeness": 77.1,
+        "visual_coherence": 85,
+        "total_score": 68.5,
+        "judge_count": 7
+      },
+      "15": {
+        "prompt_adherence": 65.7,
+        "structural_correctness": 70.7,
+        "physical_plausibility": 38.6,
+        "completeness": 75.7,
+        "visual_coherence": 80.7,
+        "total_score": 65.2,
+        "judge_count": 7
+      },
+      "16": {
+        "prompt_adherence": 89.3,
+        "structural_correctness": 82.9,
+        "physical_plausibility": 51.4,
+        "completeness": 95.7,
+        "visual_coherence": 87.9,
+        "total_score": 79.8,
+        "judge_count": 7
+      },
+      "17": {
+        "prompt_adherence": 84.3,
+        "structural_correctness": 82.9,
+        "physical_plausibility": 54.3,
+        "completeness": 93.6,
+        "visual_coherence": 87.9,
+        "total_score": 79.9,
+        "judge_count": 7
+      },
+      "18": {
+        "prompt_adherence": 85,
+        "structural_correctness": 84.3,
+        "physical_plausibility": 57.9,
+        "completeness": 94.3,
+        "visual_coherence": 90,
+        "total_score": 81.6,
+        "judge_count": 7
+      },
+      "19": {
+        "prompt_adherence": 67.1,
+        "structural_correctness": 70.7,
+        "physical_plausibility": 40.7,
+        "completeness": 83.6,
+        "visual_coherence": 81.4,
+        "total_score": 66.9,
+        "judge_count": 7
+      },
+      "20": {
+        "prompt_adherence": 85,
+        "structural_correctness": 82.9,
+        "physical_plausibility": 61.4,
+        "completeness": 94.3,
+        "visual_coherence": 84.3,
+        "total_score": 81.2,
+        "judge_count": 7
+      },
+      "21": {
+        "prompt_adherence": 77.1,
+        "structural_correctness": 72.9,
+        "physical_plausibility": 47.1,
+        "completeness": 86.4,
+        "visual_coherence": 82.1,
+        "total_score": 72.6,
+        "judge_count": 7
+      },
+      "22": {
+        "prompt_adherence": 89.3,
+        "structural_correctness": 82.1,
+        "physical_plausibility": 65,
+        "completeness": 94.3,
+        "visual_coherence": 88.6,
+        "total_score": 83.8,
+        "judge_count": 7
+      },
+      "23": {
+        "prompt_adherence": 90.7,
+        "structural_correctness": 82.9,
+        "physical_plausibility": 57.9,
+        "completeness": 96.4,
+        "visual_coherence": 88.6,
+        "total_score": 82.6,
+        "judge_count": 7
+      },
+      "24": {
+        "prompt_adherence": 77.1,
+        "structural_correctness": 70.7,
+        "physical_plausibility": 50,
+        "completeness": 82.1,
+        "visual_coherence": 85.7,
+        "total_score": 73,
+        "judge_count": 7
+      },
+      "25": {
+        "prompt_adherence": 85.7,
+        "structural_correctness": 87.9,
+        "physical_plausibility": 65.7,
+        "completeness": 95,
+        "visual_coherence": 90,
+        "total_score": 84.2,
+        "judge_count": 7
+      },
+      "26": {
+        "prompt_adherence": 87.1,
+        "structural_correctness": 83.6,
+        "physical_plausibility": 66.4,
+        "completeness": 95.7,
+        "visual_coherence": 87.9,
+        "total_score": 83.6,
+        "judge_count": 7
+      },
+      "27": {
+        "prompt_adherence": 79.3,
+        "structural_correctness": 80,
+        "physical_plausibility": 48.6,
+        "completeness": 92.1,
+        "visual_coherence": 87.1,
+        "total_score": 76.6,
+        "judge_count": 7
+      },
+      "28": {
+        "prompt_adherence": 72.9,
+        "structural_correctness": 82.9,
+        "physical_plausibility": 52.1,
+        "completeness": 85.7,
+        "visual_coherence": 88.6,
+        "total_score": 76,
+        "judge_count": 7
+      },
+      "29": {
+        "prompt_adherence": 82.9,
+        "structural_correctness": 82.1,
+        "physical_plausibility": 55,
+        "completeness": 94.3,
+        "visual_coherence": 87.1,
+        "total_score": 78.6,
+        "judge_count": 7
+      },
+      "30": {
+        "prompt_adherence": 72.1,
+        "structural_correctness": 76.4,
+        "physical_plausibility": 45.7,
+        "completeness": 82.1,
+        "visual_coherence": 85.7,
+        "total_score": 71.1,
+        "judge_count": 7
+      }
+    },
+    "openai-gpt-5.1": {
+      "1": {
+        "prompt_adherence": 85,
+        "structural_correctness": 82.1,
+        "physical_plausibility": 61.4,
+        "completeness": 91.4,
+        "visual_coherence": 89.3,
+        "total_score": 81.8,
+        "judge_count": 7
+      },
+      "2": {
+        "prompt_adherence": 67.9,
+        "structural_correctness": 78.6,
+        "physical_plausibility": 52.1,
+        "completeness": 70.7,
+        "visual_coherence": 85,
+        "total_score": 71.2,
+        "judge_count": 7
+      },
+      "3": {
+        "prompt_adherence": 91.4,
+        "structural_correctness": 84.3,
+        "physical_plausibility": 46.4,
+        "completeness": 96.4,
+        "visual_coherence": 90,
+        "total_score": 80.8,
+        "judge_count": 7
+      },
+      "4": {
+        "prompt_adherence": 85.7,
+        "structural_correctness": 82.1,
+        "physical_plausibility": 62.9,
+        "completeness": 90,
+        "visual_coherence": 86.4,
+        "total_score": 81.7,
+        "judge_count": 7
+      },
+      "5": {
+        "prompt_adherence": 85.7,
+        "structural_correctness": 87.1,
+        "physical_plausibility": 60,
+        "completeness": 95,
+        "visual_coherence": 91.4,
+        "total_score": 83.9,
+        "judge_count": 7
+      },
+      "6": {
+        "prompt_adherence": 90,
+        "structural_correctness": 86.4,
+        "physical_plausibility": 66.4,
+        "completeness": 97.1,
+        "visual_coherence": 90.7,
+        "total_score": 86.3,
+        "judge_count": 7
+      },
+      "7": {
+        "prompt_adherence": 86.4,
+        "structural_correctness": 86.4,
+        "physical_plausibility": 50.7,
+        "completeness": 95,
+        "visual_coherence": 90.7,
+        "total_score": 81,
+        "judge_count": 7
+      },
+      "8": {
+        "prompt_adherence": 77.1,
+        "structural_correctness": 80.7,
+        "physical_plausibility": 55.7,
+        "completeness": 82.1,
+        "visual_coherence": 88.6,
+        "total_score": 77,
+        "judge_count": 7
+      },
+      "9": {
+        "prompt_adherence": 84.3,
+        "structural_correctness": 79.3,
+        "physical_plausibility": 56.4,
+        "completeness": 92.1,
+        "visual_coherence": 88.6,
+        "total_score": 80.1,
+        "judge_count": 7
+      },
+      "10": {
+        "prompt_adherence": 76.4,
+        "structural_correctness": 84.3,
+        "physical_plausibility": 37.1,
+        "completeness": 90,
+        "visual_coherence": 87.9,
+        "total_score": 72.9,
+        "judge_count": 7
+      },
+      "11": {
+        "prompt_adherence": 89.3,
+        "structural_correctness": 83.6,
+        "physical_plausibility": 61.4,
+        "completeness": 96.4,
+        "visual_coherence": 89.3,
+        "total_score": 84,
+        "judge_count": 7
+      },
+      "12": {
+        "prompt_adherence": 82.1,
+        "structural_correctness": 82.1,
+        "physical_plausibility": 40,
+        "completeness": 91.4,
+        "visual_coherence": 87.1,
+        "total_score": 75,
+        "judge_count": 7
+      },
+      "13": {
+        "prompt_adherence": 87.9,
+        "structural_correctness": 83.6,
+        "physical_plausibility": 54.3,
+        "completeness": 96.4,
+        "visual_coherence": 86.4,
+        "total_score": 80.8,
+        "judge_count": 7
+      },
+      "14": {
+        "prompt_adherence": 81.4,
+        "structural_correctness": 76.4,
+        "physical_plausibility": 56.4,
+        "completeness": 87.9,
+        "visual_coherence": 86.4,
+        "total_score": 77.6,
+        "judge_count": 7
+      },
+      "15": {
+        "prompt_adherence": 42.1,
+        "structural_correctness": 60.7,
+        "physical_plausibility": 25.7,
+        "completeness": 52.1,
+        "visual_coherence": 74.3,
+        "total_score": 48.8,
+        "judge_count": 7
+      },
+      "16": {
+        "prompt_adherence": 83.6,
+        "structural_correctness": 81.4,
+        "physical_plausibility": 52.9,
+        "completeness": 93.6,
+        "visual_coherence": 88.6,
+        "total_score": 78.3,
+        "judge_count": 7
+      },
+      "17": {
+        "prompt_adherence": 69.3,
+        "structural_correctness": 78.6,
+        "physical_plausibility": 48.6,
+        "completeness": 87.9,
+        "visual_coherence": 85.7,
+        "total_score": 72.2,
+        "judge_count": 7
+      },
+      "18": {
+        "prompt_adherence": 80,
+        "structural_correctness": 79.3,
+        "physical_plausibility": 51.4,
+        "completeness": 92.1,
+        "visual_coherence": 88.6,
+        "total_score": 77.1,
+        "judge_count": 7
+      },
+      "19": {
+        "prompt_adherence": 67.9,
+        "structural_correctness": 72.9,
+        "physical_plausibility": 42.9,
+        "completeness": 77.9,
+        "visual_coherence": 82.1,
+        "total_score": 67.6,
+        "judge_count": 7
+      },
+      "20": {
+        "prompt_adherence": 87.1,
+        "structural_correctness": 85,
+        "physical_plausibility": 62.9,
+        "completeness": 95,
+        "visual_coherence": 88.6,
+        "total_score": 83.5,
+        "judge_count": 7
+      },
+      "21": {
+        "prompt_adherence": 80,
+        "structural_correctness": 78.6,
+        "physical_plausibility": 55.7,
+        "completeness": 91.4,
+        "visual_coherence": 87.1,
+        "total_score": 78.6,
+        "judge_count": 7
+      },
+      "22": {
+        "prompt_adherence": 85,
+        "structural_correctness": 76.4,
+        "physical_plausibility": 55.7,
+        "completeness": 91.4,
+        "visual_coherence": 85.7,
+        "total_score": 78.2,
+        "judge_count": 7
+      },
+      "23": {
+        "prompt_adherence": 83.6,
+        "structural_correctness": 77.1,
+        "physical_plausibility": 50,
+        "completeness": 92.1,
+        "visual_coherence": 87.1,
+        "total_score": 77.4,
+        "judge_count": 7
+      },
+      "24": {
+        "prompt_adherence": 66.4,
+        "structural_correctness": 67.1,
+        "physical_plausibility": 40,
+        "completeness": 68.6,
+        "visual_coherence": 79.3,
+        "total_score": 64.6,
+        "judge_count": 7
+      },
+      "25": {
+        "prompt_adherence": 84.3,
+        "structural_correctness": 83.6,
+        "physical_plausibility": 65.7,
+        "completeness": 91.4,
+        "visual_coherence": 87.9,
+        "total_score": 82.6,
+        "judge_count": 7
+      },
+      "26": {
+        "prompt_adherence": 88.6,
+        "structural_correctness": 84.3,
+        "physical_plausibility": 60.7,
+        "completeness": 95,
+        "visual_coherence": 90,
+        "total_score": 83.4,
+        "judge_count": 7
+      },
+      "27": {
+        "prompt_adherence": 80,
+        "structural_correctness": 79.3,
+        "physical_plausibility": 47.1,
+        "completeness": 86.4,
+        "visual_coherence": 86.4,
+        "total_score": 74.7,
+        "judge_count": 7
+      },
+      "28": {
+        "prompt_adherence": 67.9,
+        "structural_correctness": 80,
+        "physical_plausibility": 51.4,
+        "completeness": 79.3,
+        "visual_coherence": 87.9,
+        "total_score": 73.2,
+        "judge_count": 7
+      },
+      "29": {
+        "prompt_adherence": 77.1,
+        "structural_correctness": 74.3,
+        "physical_plausibility": 52.1,
+        "completeness": 85.7,
+        "visual_coherence": 84.3,
+        "total_score": 75,
+        "judge_count": 7
+      },
+      "30": {
+        "prompt_adherence": 65,
+        "structural_correctness": 73.6,
+        "physical_plausibility": 44.3,
+        "completeness": 72.9,
+        "visual_coherence": 82.9,
+        "total_score": 66.6,
+        "judge_count": 7
+      }
+    },
+    "openai-gpt-5.2-pro": {
+      "1": {
+        "prompt_adherence": 87.1,
+        "structural_correctness": 81.4,
+        "physical_plausibility": 62.9,
+        "completeness": 91.4,
+        "visual_coherence": 85,
+        "total_score": 81.6,
+        "judge_count": 7
+      },
+      "2": {
+        "prompt_adherence": 87.9,
+        "structural_correctness": 81.4,
+        "physical_plausibility": 60,
+        "completeness": 90,
+        "visual_coherence": 88.6,
+        "total_score": 81,
+        "judge_count": 7
+      },
+      "3": {
+        "prompt_adherence": 96.4,
+        "structural_correctness": 90,
+        "physical_plausibility": 60,
+        "completeness": 98.6,
+        "visual_coherence": 92.1,
+        "total_score": 86.6,
+        "judge_count": 7
+      }
+    },
+    "qwen_qwen3-vl-235b-a22b-thinking": {
+      "1": {
+        "prompt_adherence": 87.1,
+        "structural_correctness": 78.6,
+        "physical_plausibility": 60,
+        "completeness": 94.3,
+        "visual_coherence": 82.1,
+        "total_score": 80.5,
+        "judge_count": 7
+      },
+      "2": {
+        "prompt_adherence": 63.6,
+        "structural_correctness": 66.4,
+        "physical_plausibility": 37.1,
+        "completeness": 73.6,
+        "visual_coherence": 76.4,
+        "total_score": 62.2,
+        "judge_count": 7
+      },
+      "3": {
+        "prompt_adherence": 40.7,
+        "structural_correctness": 47.1,
+        "physical_plausibility": 28.6,
+        "completeness": 48.6,
+        "visual_coherence": 60.7,
+        "total_score": 43.3,
+        "judge_count": 7
+      },
+      "4": {
+        "prompt_adherence": 17.1,
+        "structural_correctness": 27.1,
+        "physical_plausibility": 11.4,
+        "completeness": 23.6,
+        "visual_coherence": 42.9,
+        "total_score": 23.6,
+        "judge_count": 7
+      },
+      "5": {
+        "prompt_adherence": 80,
+        "structural_correctness": 79.3,
+        "physical_plausibility": 54.3,
+        "completeness": 88.6,
+        "visual_coherence": 87.9,
+        "total_score": 77.2,
+        "judge_count": 7
+      },
+      "6": {
+        "prompt_adherence": 67.1,
+        "structural_correctness": 66.4,
+        "physical_plausibility": 35,
+        "completeness": 77.1,
+        "visual_coherence": 77.1,
+        "total_score": 63.9,
+        "judge_count": 7
+      },
+      "7": {
+        "prompt_adherence": 79.3,
+        "structural_correctness": 80,
+        "physical_plausibility": 42.9,
+        "completeness": 91.4,
+        "visual_coherence": 85.7,
+        "total_score": 73.8,
+        "judge_count": 7
+      },
+      "8": {
+        "prompt_adherence": 72.1,
+        "structural_correctness": 66.4,
+        "physical_plausibility": 41.4,
+        "completeness": 81.4,
+        "visual_coherence": 82.1,
+        "total_score": 67.9,
+        "judge_count": 7
+      },
+      "9": {
+        "prompt_adherence": 47.9,
+        "structural_correctness": 65,
+        "physical_plausibility": 40.7,
+        "completeness": 65,
+        "visual_coherence": 77.9,
+        "total_score": 57.2,
+        "judge_count": 7
+      },
+      "10": {
+        "prompt_adherence": 73.6,
+        "structural_correctness": 72.1,
+        "physical_plausibility": 34.3,
+        "completeness": 87.1,
+        "visual_coherence": 76.4,
+        "total_score": 66,
+        "judge_count": 7
+      },
+      "11": {
+        "prompt_adherence": 66.4,
+        "structural_correctness": 66.4,
+        "physical_plausibility": 42.1,
+        "completeness": 78.6,
+        "visual_coherence": 76.4,
+        "total_score": 65.9,
+        "judge_count": 7
+      },
+      "12": {
+        "prompt_adherence": 28.6,
+        "structural_correctness": 41.4,
+        "physical_plausibility": 12.9,
+        "completeness": 42.1,
+        "visual_coherence": 60,
+        "total_score": 33.7,
+        "judge_count": 7
+      },
+      "13": {
+        "prompt_adherence": 55,
+        "structural_correctness": 67.1,
+        "physical_plausibility": 35.7,
+        "completeness": 74.3,
+        "visual_coherence": 75.7,
+        "total_score": 58,
+        "judge_count": 7
+      },
+      "14": {
+        "prompt_adherence": 44.3,
+        "structural_correctness": 31.4,
+        "physical_plausibility": 18.6,
+        "completeness": 51.4,
+        "visual_coherence": 46.4,
+        "total_score": 37.6,
+        "judge_count": 7
+      },
+      "15": {
+        "prompt_adherence": 32.9,
+        "structural_correctness": 55,
+        "physical_plausibility": 28.6,
+        "completeness": 47.1,
+        "visual_coherence": 70,
+        "total_score": 45.4,
+        "judge_count": 7
+      },
+      "16": {
+        "prompt_adherence": 55.7,
+        "structural_correctness": 51.4,
+        "physical_plausibility": 35,
+        "completeness": 67.9,
+        "visual_coherence": 70,
+        "total_score": 54.4,
+        "judge_count": 7
+      },
+      "17": {
+        "prompt_adherence": 37.9,
+        "structural_correctness": 45.7,
+        "physical_plausibility": 21.4,
+        "completeness": 50,
+        "visual_coherence": 60,
+        "total_score": 39.4,
+        "judge_count": 7
+      },
+      "18": {
+        "prompt_adherence": 57.9,
+        "structural_correctness": 56.4,
+        "physical_plausibility": 34.3,
+        "completeness": 72.9,
+        "visual_coherence": 73.6,
+        "total_score": 55.1,
+        "judge_count": 7
+      },
+      "19": {
+        "prompt_adherence": 58.6,
+        "structural_correctness": 59.3,
+        "physical_plausibility": 37.1,
+        "completeness": 68.6,
+        "visual_coherence": 73.6,
+        "total_score": 58.7,
+        "judge_count": 7
+      },
+      "20": {
+        "prompt_adherence": 78.6,
+        "structural_correctness": 77.1,
+        "physical_plausibility": 57.1,
+        "completeness": 87.9,
+        "visual_coherence": 84.3,
+        "total_score": 76.7,
+        "judge_count": 7
+      },
+      "21": {
+        "prompt_adherence": 62.9,
+        "structural_correctness": 67.9,
+        "physical_plausibility": 40,
+        "completeness": 78.6,
+        "visual_coherence": 80.7,
+        "total_score": 65,
+        "judge_count": 7
+      },
+      "22": {
+        "prompt_adherence": 57.9,
+        "structural_correctness": 55,
+        "physical_plausibility": 37.1,
+        "completeness": 67.9,
+        "visual_coherence": 63.6,
+        "total_score": 55.9,
+        "judge_count": 7
+      },
+      "23": {
+        "prompt_adherence": 75.7,
+        "structural_correctness": 67.1,
+        "physical_plausibility": 40.7,
+        "completeness": 85.7,
+        "visual_coherence": 82.1,
+        "total_score": 69,
+        "judge_count": 7
+      },
+      "24": {
+        "prompt_adherence": 68.6,
+        "structural_correctness": 64.3,
+        "physical_plausibility": 41.4,
+        "completeness": 79.3,
+        "visual_coherence": 82.1,
+        "total_score": 67.1,
+        "judge_count": 7
+      },
+      "25": {
+        "prompt_adherence": 74.3,
+        "structural_correctness": 73.6,
+        "physical_plausibility": 58.6,
+        "completeness": 85.7,
+        "visual_coherence": 82.1,
+        "total_score": 74.6,
+        "judge_count": 7
+      },
+      "26": {
+        "prompt_adherence": 81.4,
+        "structural_correctness": 82.1,
+        "physical_plausibility": 57.1,
+        "completeness": 90.7,
+        "visual_coherence": 82.1,
+        "total_score": 78.5,
+        "judge_count": 7
+      },
+      "27": {
+        "prompt_adherence": 30,
+        "structural_correctness": 47.9,
+        "physical_plausibility": 17.1,
+        "completeness": 38.6,
+        "visual_coherence": 62.9,
+        "total_score": 38,
+        "judge_count": 7
+      },
+      "28": {
+        "prompt_adherence": 31.4,
+        "structural_correctness": 63.6,
+        "physical_plausibility": 21.4,
+        "completeness": 42.1,
+        "visual_coherence": 59.3,
+        "total_score": 41.5,
+        "judge_count": 7
+      },
+      "29": {
+        "prompt_adherence": 72.9,
+        "structural_correctness": 78.6,
+        "physical_plausibility": 48.6,
+        "completeness": 85.7,
+        "visual_coherence": 83.6,
+        "total_score": 73.3,
+        "judge_count": 7
+      },
+      "30": {
+        "prompt_adherence": 54.3,
+        "structural_correctness": 63.6,
+        "physical_plausibility": 38.6,
+        "completeness": 63.6,
+        "visual_coherence": 75.7,
+        "total_score": 58.5,
+        "judge_count": 7
+      }
+    },
+    "x-ai_grok-code-fast-1": {
+      "1": {
+        "prompt_adherence": 77.1,
+        "structural_correctness": 67.1,
+        "physical_plausibility": 44.3,
+        "completeness": 83.6,
+        "visual_coherence": 75.7,
+        "total_score": 68.8,
+        "judge_count": 7
+      },
+      "2": {
+        "prompt_adherence": 57.9,
+        "structural_correctness": 57.9,
+        "physical_plausibility": 38.6,
+        "completeness": 67.9,
+        "visual_coherence": 73.6,
+        "total_score": 59.1,
+        "judge_count": 7
+      },
+      "3": {
+        "prompt_adherence": 38.6,
+        "structural_correctness": 38.6,
+        "physical_plausibility": 19.3,
+        "completeness": 47.1,
+        "visual_coherence": 54.3,
+        "total_score": 39,
+        "judge_count": 7
+      },
+      "4": {
+        "prompt_adherence": 30,
+        "structural_correctness": 42.9,
+        "physical_plausibility": 12.9,
+        "completeness": 35,
+        "visual_coherence": 61.4,
+        "total_score": 35.5,
+        "judge_count": 7
+      },
+      "5": {
+        "prompt_adherence": 30.7,
+        "structural_correctness": 30,
+        "physical_plausibility": 15,
+        "completeness": 35.7,
+        "visual_coherence": 52.1,
+        "total_score": 31.5,
+        "judge_count": 7
+      },
+      "6": {
+        "prompt_adherence": 73.6,
+        "structural_correctness": 65,
+        "physical_plausibility": 56.4,
+        "completeness": 82.9,
+        "visual_coherence": 80,
+        "total_score": 71.9,
+        "judge_count": 7
+      },
+      "7": {
+        "prompt_adherence": 12.1,
+        "structural_correctness": 45.7,
+        "physical_plausibility": 8.6,
+        "completeness": 22.1,
+        "visual_coherence": 50,
+        "total_score": 24.5,
+        "judge_count": 7
+      },
+      "8": {
+        "prompt_adherence": 21.4,
+        "structural_correctness": 35,
+        "physical_plausibility": 12.9,
+        "completeness": 32.9,
+        "visual_coherence": 48.6,
+        "total_score": 27.6,
+        "judge_count": 7
+      },
+      "9": {
+        "prompt_adherence": 50.7,
+        "structural_correctness": 51.4,
+        "physical_plausibility": 33.6,
+        "completeness": 62.9,
+        "visual_coherence": 70.7,
+        "total_score": 50.7,
+        "judge_count": 7
+      },
+      "10": {
+        "prompt_adherence": 56.4,
+        "structural_correctness": 55.7,
+        "physical_plausibility": 27.1,
+        "completeness": 69.3,
+        "visual_coherence": 65.7,
+        "total_score": 52.4,
+        "judge_count": 7
+      },
+      "11": {
+        "prompt_adherence": 40,
+        "structural_correctness": 47.1,
+        "physical_plausibility": 27.9,
+        "completeness": 47.9,
+        "visual_coherence": 63.6,
+        "total_score": 43.9,
+        "judge_count": 7
+      },
+      "12": {
+        "prompt_adherence": 39.3,
+        "structural_correctness": 55.7,
+        "physical_plausibility": 20,
+        "completeness": 42.9,
+        "visual_coherence": 61.4,
+        "total_score": 41.3,
+        "judge_count": 7
+      },
+      "13": {
+        "prompt_adherence": 45.7,
+        "structural_correctness": 47.1,
+        "physical_plausibility": 30.7,
+        "completeness": 61.4,
+        "visual_coherence": 62.9,
+        "total_score": 47.2,
+        "judge_count": 7
+      },
+      "14": {
+        "prompt_adherence": 18.6,
+        "structural_correctness": 25,
+        "physical_plausibility": 10,
+        "completeness": 24.3,
+        "visual_coherence": 34.3,
+        "total_score": 22.8,
+        "judge_count": 7
+      },
+      "15": {
+        "prompt_adherence": 27.1,
+        "structural_correctness": 42.9,
+        "physical_plausibility": 15.7,
+        "completeness": 38.6,
+        "visual_coherence": 61.4,
+        "total_score": 35.2,
+        "judge_count": 7
+      },
+      "16": {
+        "prompt_adherence": 40,
+        "structural_correctness": 45.7,
+        "physical_plausibility": 30,
+        "completeness": 61.4,
+        "visual_coherence": 65.7,
+        "total_score": 44.5,
+        "judge_count": 7
+      },
+      "17": {
+        "prompt_adherence": 18.6,
+        "structural_correctness": 24.3,
+        "physical_plausibility": 10.7,
+        "completeness": 30,
+        "visual_coherence": 27.9,
+        "total_score": 21.7,
+        "judge_count": 7
+      },
+      "18": {
+        "prompt_adherence": 63.6,
+        "structural_correctness": 60.7,
+        "physical_plausibility": 37.9,
+        "completeness": 82.1,
+        "visual_coherence": 72.1,
+        "total_score": 61.4,
+        "judge_count": 7
+      },
+      "19": {
+        "prompt_adherence": 70.7,
+        "structural_correctness": 63.6,
+        "physical_plausibility": 37.1,
+        "completeness": 77.9,
+        "visual_coherence": 75.7,
+        "total_score": 64.7,
+        "judge_count": 7
+      },
+      "20": {
+        "prompt_adherence": 52.9,
+        "structural_correctness": 60.7,
+        "physical_plausibility": 43.6,
+        "completeness": 63.6,
+        "visual_coherence": 75.7,
+        "total_score": 58.8,
+        "judge_count": 7
+      },
+      "21": {
+        "prompt_adherence": 74.3,
+        "structural_correctness": 65.7,
+        "physical_plausibility": 38.6,
+        "completeness": 79.3,
+        "visual_coherence": 76.4,
+        "total_score": 65.6,
+        "judge_count": 7
+      },
+      "22": {
+        "prompt_adherence": 52.9,
+        "structural_correctness": 55,
+        "physical_plausibility": 32.1,
+        "completeness": 66.4,
+        "visual_coherence": 64.3,
+        "total_score": 51.8,
+        "judge_count": 7
+      },
+      "23": {
+        "prompt_adherence": 62.9,
+        "structural_correctness": 51.4,
+        "physical_plausibility": 30,
+        "completeness": 75.7,
+        "visual_coherence": 65,
+        "total_score": 56,
+        "judge_count": 7
+      },
+      "24": {
+        "prompt_adherence": 52.9,
+        "structural_correctness": 43.6,
+        "physical_plausibility": 30,
+        "completeness": 60.7,
+        "visual_coherence": 62.1,
+        "total_score": 48.8,
+        "judge_count": 7
+      },
+      "25": {
+        "prompt_adherence": 68.6,
+        "structural_correctness": 72.1,
+        "physical_plausibility": 43.6,
+        "completeness": 82.9,
+        "visual_coherence": 82.1,
+        "total_score": 68.4,
+        "judge_count": 7
+      },
+      "26": {
+        "prompt_adherence": 58.6,
+        "structural_correctness": 66.4,
+        "physical_plausibility": 50.7,
+        "completeness": 71.4,
+        "visual_coherence": 76.4,
+        "total_score": 64.2,
+        "judge_count": 7
+      },
+      "27": {
+        "prompt_adherence": 59.3,
+        "structural_correctness": 67.9,
+        "physical_plausibility": 34.3,
+        "completeness": 77.9,
+        "visual_coherence": 79.3,
+        "total_score": 61.3,
+        "judge_count": 7
+      },
+      "28": {
+        "prompt_adherence": 7.1,
+        "structural_correctness": 20,
+        "physical_plausibility": 5.7,
+        "completeness": 13.6,
+        "visual_coherence": 34.3,
+        "total_score": 14.1,
+        "judge_count": 7
+      },
+      "29": {
+        "prompt_adherence": 34.3,
+        "structural_correctness": 49.3,
+        "physical_plausibility": 17.1,
+        "completeness": 45,
+        "visual_coherence": 66.4,
+        "total_score": 40.3,
+        "judge_count": 7
+      },
+      "30": {
+        "prompt_adherence": 48.6,
+        "structural_correctness": 57.9,
+        "physical_plausibility": 30,
+        "completeness": 62.9,
+        "visual_coherence": 70,
+        "total_score": 51.6,
+        "judge_count": 7
+      }
+    },
+    "z-ai_glm-4.6": {
+      "1": {
+        "prompt_adherence": 89.3,
+        "structural_correctness": 84.3,
+        "physical_plausibility": 63.6,
+        "completeness": 93.6,
+        "visual_coherence": 90,
+        "total_score": 84.3,
+        "judge_count": 7
+      },
+      "2": {
+        "prompt_adherence": 83.6,
+        "structural_correctness": 77.9,
+        "physical_plausibility": 55,
+        "completeness": 87.9,
+        "visual_coherence": 87.1,
+        "total_score": 77.8,
+        "judge_count": 7
+      },
+      "3": {
+        "prompt_adherence": 76.4,
+        "structural_correctness": 73.6,
+        "physical_plausibility": 41.4,
+        "completeness": 89.3,
+        "visual_coherence": 84.3,
+        "total_score": 70.7,
+        "judge_count": 7
+      },
+      "4": {
+        "prompt_adherence": 50,
+        "structural_correctness": 64.3,
+        "physical_plausibility": 35.7,
+        "completeness": 57.9,
+        "visual_coherence": 75.7,
+        "total_score": 56.8,
+        "judge_count": 7
+      },
+      "5": {
+        "prompt_adherence": 77.9,
+        "structural_correctness": 78.6,
+        "physical_plausibility": 54.3,
+        "completeness": 82.9,
+        "visual_coherence": 87.1,
+        "total_score": 75.9,
+        "judge_count": 7
+      },
+      "6": {
+        "prompt_adherence": 87.1,
+        "structural_correctness": 80.7,
+        "physical_plausibility": 57.9,
+        "completeness": 93.6,
+        "visual_coherence": 86.4,
+        "total_score": 81.4,
+        "judge_count": 7
+      },
+      "7": {
+        "prompt_adherence": 83.6,
+        "structural_correctness": 85,
+        "physical_plausibility": 47.1,
+        "completeness": 90.7,
+        "visual_coherence": 87.9,
+        "total_score": 77.1,
+        "judge_count": 7
+      },
+      "8": {
+        "prompt_adherence": 78.6,
+        "structural_correctness": 76.4,
+        "physical_plausibility": 50.7,
+        "completeness": 85.7,
+        "visual_coherence": 85.7,
+        "total_score": 75,
+        "judge_count": 7
+      },
+      "9": {
+        "prompt_adherence": 52.1,
+        "structural_correctness": 67.9,
+        "physical_plausibility": 39.3,
+        "completeness": 58.6,
+        "visual_coherence": 77.1,
+        "total_score": 58.4,
+        "judge_count": 7
+      },
+      "10": {
+        "prompt_adherence": 73.6,
+        "structural_correctness": 78.6,
+        "physical_plausibility": 40,
+        "completeness": 84.3,
+        "visual_coherence": 85,
+        "total_score": 69.8,
+        "judge_count": 7
+      },
+      "11": {
+        "prompt_adherence": 87.9,
+        "structural_correctness": 79.3,
+        "physical_plausibility": 60,
+        "completeness": 95.7,
+        "visual_coherence": 87.9,
+        "total_score": 82.2,
+        "judge_count": 7
+      },
+      "12": {
+        "prompt_adherence": 72.9,
+        "structural_correctness": 72.9,
+        "physical_plausibility": 34.3,
+        "completeness": 87.9,
+        "visual_coherence": 79.3,
+        "total_score": 66,
+        "judge_count": 7
+      },
+      "13": {
+        "prompt_adherence": 66.4,
+        "structural_correctness": 79.3,
+        "physical_plausibility": 55.7,
+        "completeness": 78.6,
+        "visual_coherence": 82.9,
+        "total_score": 70.7,
+        "judge_count": 7
+      },
+      "14": {
+        "prompt_adherence": 85.7,
+        "structural_correctness": 82.9,
+        "physical_plausibility": 57.1,
+        "completeness": 95.7,
+        "visual_coherence": 87.1,
+        "total_score": 81.3,
+        "judge_count": 7
+      },
+      "15": {
+        "prompt_adherence": 46.4,
+        "structural_correctness": 65,
+        "physical_plausibility": 31.4,
+        "completeness": 55.7,
+        "visual_coherence": 75,
+        "total_score": 53.4,
+        "judge_count": 7
+      },
+      "16": {
+        "prompt_adherence": 70,
+        "structural_correctness": 70.7,
+        "physical_plausibility": 45,
+        "completeness": 88.6,
+        "visual_coherence": 83.6,
+        "total_score": 68.1,
+        "judge_count": 7
+      },
+      "17": {
+        "prompt_adherence": 74.3,
+        "structural_correctness": 74.3,
+        "physical_plausibility": 48.6,
+        "completeness": 85,
+        "visual_coherence": 86.4,
+        "total_score": 73.2,
+        "judge_count": 7
+      },
+      "18": {
+        "prompt_adherence": 67.1,
+        "structural_correctness": 76.4,
+        "physical_plausibility": 41.4,
+        "completeness": 80,
+        "visual_coherence": 87.1,
+        "total_score": 69,
+        "judge_count": 7
+      },
+      "19": {
+        "prompt_adherence": 79.3,
+        "structural_correctness": 81.4,
+        "physical_plausibility": 52.9,
+        "completeness": 91.4,
+        "visual_coherence": 87.1,
+        "total_score": 78.4,
+        "judge_count": 7
+      },
+      "20": {
+        "prompt_adherence": 50,
+        "structural_correctness": 66.4,
+        "physical_plausibility": 34.3,
+        "completeness": 61.4,
+        "visual_coherence": 78.6,
+        "total_score": 57.1,
+        "judge_count": 7
+      },
+      "21": {
+        "prompt_adherence": 75,
+        "structural_correctness": 80,
+        "physical_plausibility": 47.1,
+        "completeness": 89.3,
+        "visual_coherence": 87.1,
+        "total_score": 75,
+        "judge_count": 7
+      },
+      "22": {
+        "prompt_adherence": 40,
+        "structural_correctness": 62.9,
+        "physical_plausibility": 45,
+        "completeness": 51.4,
+        "visual_coherence": 77.1,
+        "total_score": 51.4,
+        "judge_count": 7
+      },
+      "23": {
+        "prompt_adherence": 72.1,
+        "structural_correctness": 71.4,
+        "physical_plausibility": 42.9,
+        "completeness": 85.7,
+        "visual_coherence": 85.7,
+        "total_score": 70.4,
+        "judge_count": 7
+      },
+      "24": {
+        "prompt_adherence": 72.1,
+        "structural_correctness": 72.1,
+        "physical_plausibility": 49.3,
+        "completeness": 74.3,
+        "visual_coherence": 83.6,
+        "total_score": 70.5,
+        "judge_count": 7
+      },
+      "25": {
+        "prompt_adherence": 84.3,
+        "structural_correctness": 84.3,
+        "physical_plausibility": 65,
+        "completeness": 92.9,
+        "visual_coherence": 90.7,
+        "total_score": 83,
+        "judge_count": 7
+      },
+      "26": {
+        "prompt_adherence": 79.3,
+        "structural_correctness": 82.9,
+        "physical_plausibility": 59.3,
+        "completeness": 89.3,
+        "visual_coherence": 90,
+        "total_score": 79.4,
+        "judge_count": 7
+      },
+      "27": {
+        "prompt_adherence": 61.4,
+        "structural_correctness": 68.6,
+        "physical_plausibility": 42.1,
+        "completeness": 67.1,
+        "visual_coherence": 78.6,
+        "total_score": 63,
+        "judge_count": 7
+      },
+      "28": {
+        "prompt_adherence": 47.9,
+        "structural_correctness": 75.7,
+        "physical_plausibility": 47.1,
+        "completeness": 60,
+        "visual_coherence": 82.9,
+        "total_score": 62.6,
+        "judge_count": 7
+      },
+      "29": {
+        "prompt_adherence": 68.6,
+        "structural_correctness": 75.7,
+        "physical_plausibility": 45.7,
+        "completeness": 77.9,
+        "visual_coherence": 84.3,
+        "total_score": 69.6,
+        "judge_count": 7
+      },
+      "30": {
+        "prompt_adherence": 74.3,
+        "structural_correctness": 76.4,
+        "physical_plausibility": 51.4,
+        "completeness": 83.6,
+        "visual_coherence": 85.7,
+        "total_score": 73.2,
+        "judge_count": 7
+      }
+    }
+  }
+}
