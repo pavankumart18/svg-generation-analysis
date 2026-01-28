@@ -1,5 +1,18 @@
 // SVG Generation Benchmark UI Script
 
+// Sorting state
+let summarySortState = { column: null, direction: 'asc' };
+let promptsSortState = { column: null, direction: 'asc' };
+
+// Model filter state
+let selectedModels = new Set();
+let allModels = [];
+
+// Judge filter state
+let selectedJudges = new Set();
+let allJudges = [];
+let evaluationsByPrompt = null;
+
 // Load benchmark data
 async function loadBenchmarkData() {
   const response = await fetch('benchmark_final.json');
@@ -10,6 +23,16 @@ async function loadBenchmarkData() {
 async function loadInsightsData() {
   try {
     const response = await fetch('benchmark_insights.json');
+    return await response.json();
+  } catch (e) {
+    return null;
+  }
+}
+
+// Load evaluations by prompt data
+async function loadEvaluationsByPrompt() {
+  try {
+    const response = await fetch('evaluations_by_prompt.json');
     return await response.json();
   } catch (e) {
     return null;
@@ -33,28 +56,414 @@ function formatModelName(name) {
     .join(' ');
 }
 
+// Format judge name for display
+function formatJudgeName(judgeId) {
+  const names = {
+    'qwen-vl-72b': 'Qwen 2.5 VL 72B',
+    'gemma-27b': 'Google Gemma 3 27B',
+    'molmo-8b': 'Allen AI Molmo 8B',
+    'gemini-flash-lite': 'Gemini Flash Lite',
+    'gemini-flash-lite-preview': 'Gemini Flash Lite Preview',
+    'gemini-3-flash': 'Gemini 3 Flash',
+    'gemini-flash-image': 'Gemini Flash Image'
+  };
+  return names[judgeId] || formatModelName(judgeId);
+}
+
+// Recalculate aggregated scores based on selected judges
+function recalculateAggregatedScores(data, evaluationsData) {
+  if (!evaluationsData || selectedJudges.size === 0) {
+    return data; // Return original if no evaluations data or no judges selected
+  }
+  
+  const svgModels = data.model_rankings.map(m => m.model);
+  const prompts = Object.keys(evaluationsData).filter(k => k.startsWith('prompt'));
+  
+  // Calculate new aggregated scores
+  const newModelRankings = svgModels.map(model => {
+    const scores = {
+      prompt_adherence: [],
+      structural_correctness: [],
+      physical_plausibility: [],
+      completeness: [],
+      visual_coherence: [],
+      total_score: []
+    };
+    
+    prompts.forEach(promptKey => {
+      const promptData = evaluationsData[promptKey];
+      const modelData = promptData?.svg_models?.[model];
+      
+      if (modelData && modelData.judges) {
+        // Get scores from selected judges only
+        Object.keys(modelData.judges).forEach(judgeId => {
+          if (selectedJudges.has(judgeId)) {
+            const judgeScore = modelData.judges[judgeId];
+            scores.prompt_adherence.push(judgeScore.prompt_adherence);
+            scores.structural_correctness.push(judgeScore.structural_correctness);
+            scores.physical_plausibility.push(judgeScore.physical_plausibility);
+            scores.completeness.push(judgeScore.completeness);
+            scores.visual_coherence.push(judgeScore.visual_coherence);
+            scores.total_score.push(judgeScore.total_score);
+          }
+        });
+      }
+    });
+    
+    // Calculate averages
+    const avg = (arr) => arr.length > 0 ? arr.reduce((a, b) => a + b, 0) / arr.length : 0;
+    
+    return {
+      model: model,
+      avg_total_score: avg(scores.total_score),
+      avg_prompt_adherence: avg(scores.prompt_adherence),
+      avg_structural_correctness: avg(scores.structural_correctness),
+      avg_physical_plausibility: avg(scores.physical_plausibility),
+      avg_completeness: avg(scores.completeness),
+      avg_visual_coherence: avg(scores.visual_coherence),
+      prompts_evaluated: data.model_rankings.find(m => m.model === model)?.prompts_evaluated || 0,
+      rank: 0 // Will be recalculated
+    };
+  });
+  
+  // Sort by avg_total_score and assign ranks
+  newModelRankings.sort((a, b) => b.avg_total_score - a.avg_total_score);
+  newModelRankings.forEach((model, idx) => {
+    model.rank = idx + 1;
+  });
+  
+  // Recalculate prompt_model_scores
+  const newPromptModelScores = prompts.map(promptKey => {
+    const promptNum = parseInt(promptKey.replace('prompt', ''));
+    const promptData = evaluationsData[promptKey];
+    const result = {
+      prompt: promptNum,
+      prompt_text: promptData.prompt_text
+    };
+    
+    svgModels.forEach(model => {
+      const modelData = promptData?.svg_models?.[model];
+      if (modelData && modelData.judges) {
+        const judgeScores = Object.keys(modelData.judges)
+          .filter(judgeId => selectedJudges.has(judgeId))
+          .map(judgeId => modelData.judges[judgeId].total_score);
+        
+        if (judgeScores.length > 0) {
+          result[model] = judgeScores.reduce((a, b) => a + b, 0) / judgeScores.length;
+        }
+      }
+    });
+    
+    return result;
+  });
+  
+  // Recalculate detailed_aggregated_scores for modal
+  const newDetailedScores = {};
+  svgModels.forEach(model => {
+    newDetailedScores[model] = {};
+    prompts.forEach(promptKey => {
+      const promptNum = promptKey.replace('prompt', '');
+      const promptData = evaluationsData[promptKey];
+      const modelData = promptData?.svg_models?.[model];
+      
+      if (modelData && modelData.judges) {
+        const selectedJudgeScores = Object.keys(modelData.judges)
+          .filter(judgeId => selectedJudges.has(judgeId))
+          .map(judgeId => modelData.judges[judgeId]);
+        
+        if (selectedJudgeScores.length > 0) {
+          const avg = (field) => {
+            const values = selectedJudgeScores.map(s => s[field]).filter(v => v != null);
+            return values.length > 0 ? values.reduce((a, b) => a + b, 0) / values.length : 0;
+          };
+          
+          newDetailedScores[model][promptNum] = {
+            prompt_adherence: avg('prompt_adherence'),
+            structural_correctness: avg('structural_correctness'),
+            physical_plausibility: avg('physical_plausibility'),
+            completeness: avg('completeness'),
+            visual_coherence: avg('visual_coherence'),
+            total_score: avg('total_score'),
+            judge_count: selectedJudgeScores.length
+          };
+        }
+      }
+    });
+  });
+  
+  return {
+    ...data,
+    model_rankings: newModelRankings,
+    prompt_model_scores: newPromptModelScores,
+    detailed_aggregated_scores: newDetailedScores
+  };
+}
+
+// Sort summary table
+function sortSummaryTable(data, column, direction) {
+  const rankings = [...data.model_rankings];
+  
+  rankings.sort((a, b) => {
+    let aVal, bVal;
+    
+    if (column === 'rank') {
+      aVal = a.rank;
+      bVal = b.rank;
+    } else if (column === 'model') {
+      aVal = formatModelName(a.model).toLowerCase();
+      bVal = formatModelName(b.model).toLowerCase();
+    } else {
+      aVal = a[column] || 0;
+      bVal = b[column] || 0;
+    }
+    
+    if (aVal < bVal) return direction === 'asc' ? -1 : 1;
+    if (aVal > bVal) return direction === 'asc' ? 1 : -1;
+    return 0;
+  });
+  
+  return rankings;
+}
+
+// Sort prompts table
+function sortPromptsTable(data, column, direction) {
+  const prompts = [...data.prompt_model_scores];
+  const models = data.model_rankings.map(m => m.model);
+  
+  if (column === 'prompt') {
+    prompts.sort((a, b) => {
+      return direction === 'asc' ? a.prompt - b.prompt : b.prompt - a.prompt;
+    });
+  } else {
+    // Sort by model score
+    const modelIndex = models.indexOf(column);
+    if (modelIndex !== -1) {
+      prompts.sort((a, b) => {
+        const aVal = a[column] || 0;
+        const bVal = b[column] || 0;
+        return direction === 'asc' ? aVal - bVal : bVal - aVal;
+      });
+    }
+  }
+  
+  return prompts;
+}
+
+// Update filter button badge
+function updateFilterButton() {
+  const button = document.querySelector('[data-bs-toggle="dropdown"]');
+  if (button) {
+    const count = selectedModels.size;
+    const total = allModels.length;
+    const badge = button.querySelector('.badge') || document.createElement('span');
+    if (!button.querySelector('.badge')) {
+      badge.className = 'badge bg-primary ms-2';
+      button.appendChild(badge);
+    }
+    badge.textContent = `${count}/${total}`;
+    if (count === 0) {
+      badge.className = 'badge bg-danger ms-2';
+    } else if (count === total) {
+      badge.className = 'badge bg-success ms-2';
+    } else {
+      badge.className = 'badge bg-primary ms-2';
+    }
+  }
+}
+
+// Initialize models (filter UI removed, but we still need to track models)
+function renderModelFilter(data) {
+  allModels = data.model_rankings.map(m => m.model);
+  
+  // Always initialize all models as selected (no filter UI, so show all)
+  selectedModels.clear();
+  allModels.forEach(model => selectedModels.add(model));
+}
+
+// Render judge filter
+function renderJudgeFilter(data) {
+  const judgesList = document.getElementById('judges-list');
+  if (!judgesList) return;
+  
+  // Get judges from metadata or default list
+  allJudges = data.metadata?.judges_used || [
+    'qwen-vl-72b',
+    'gemma-27b',
+    'molmo-8b',
+    'gemini-flash-lite',
+    'gemini-flash-lite-preview',
+    'gemini-3-flash',
+    'gemini-flash-image'
+  ];
+  
+  // Initialize all judges as selected if not already set
+  if (selectedJudges.size === 0) {
+    allJudges.forEach(judge => selectedJudges.add(judge));
+  }
+  
+  // Render judges list with checkboxes
+  judgesList.innerHTML = allJudges.map(judge => `
+    <div class="form-check mb-2">
+      <input class="form-check-input" type="checkbox" value="${judge}" id="judge-list-${judge}" 
+             ${selectedJudges.has(judge) ? 'checked' : ''}>
+      <label class="form-check-label small" for="judge-list-${judge}">
+        ${formatJudgeName(judge)}
+      </label>
+    </div>
+  `).join('');
+  
+  // Add event listeners to list checkboxes
+  allJudges.forEach(judge => {
+    const checkbox = document.getElementById(`judge-list-${judge}`);
+    if (checkbox) {
+      checkbox.addEventListener('change', (e) => {
+        if (e.target.checked) {
+          selectedJudges.add(judge);
+        } else {
+          selectedJudges.delete(judge);
+        }
+        updateJudgeFilterButton();
+        // Recalculate and re-render
+        if (benchmarkData && evaluationsByPrompt && selectedJudges.size > 0) {
+          const recalculated = recalculateAggregatedScores(benchmarkData, evaluationsByPrompt);
+          renderSummaryTable(recalculated);
+          renderPromptsTable(recalculated);
+          renderInsights(recalculated);
+        } else if (benchmarkData) {
+          renderSummaryTable(benchmarkData);
+          renderPromptsTable(benchmarkData);
+          renderInsights(benchmarkData);
+        }
+      });
+    }
+  });
+  
+  updateJudgeFilterButton();
+}
+
+// Update judge count text
+function updateJudgeFilterButton() {
+  const countText = document.getElementById('judge-count-text');
+  if (countText) {
+    countText.textContent = selectedJudges.size;
+  }
+}
+
+// Update judges list display (sync checkboxes)
+function updateJudgesList() {
+  allJudges.forEach(judge => {
+    const checkbox = document.getElementById(`judge-list-${judge}`);
+    if (checkbox) {
+      checkbox.checked = selectedJudges.has(judge);
+    }
+  });
+}
+
 // Render summary table
 function renderSummaryTable(data) {
   const tbody = document.getElementById('summary-body');
   tbody.innerHTML = '';
 
-  data.model_rankings.forEach((model, idx) => {
+  // Filter by selected models
+  let filteredRankings = data.model_rankings.filter(m => selectedModels.has(m.model));
+  
+  // Show message if no models selected
+  if (filteredRankings.length === 0) {
+    tbody.innerHTML = `
+      <tr>
+        <td colspan="8" class="text-center text-muted py-4">
+          <i class="bi bi-funnel me-2"></i>No models selected. Use the filter dropdown to select models.
+        </td>
+      </tr>
+    `;
+    return;
+  }
+  
+  // Find best and worst values for each column (using filtered rankings, before sorting)
+  const scoreFields = ['avg_total_score', 'avg_prompt_adherence', 'avg_structural_correctness', 
+                       'avg_physical_plausibility', 'avg_completeness', 'avg_visual_coherence'];
+  
+  const bestWorst = {};
+  scoreFields.forEach(field => {
+    const values = filteredRankings.map(m => m[field]).filter(v => v != null);
+    if (values.length > 0) {
+      bestWorst[field] = {
+        best: Math.max(...values),
+        worst: Math.min(...values)
+      };
+    }
+  });
+  
+  // Use sorted data if sort is active (after calculating best/worst)
+  const rankings = summarySortState.column 
+    ? sortSummaryTable({ model_rankings: filteredRankings }, summarySortState.column, summarySortState.direction)
+    : filteredRankings;
+
+  rankings.forEach((model, idx) => {
     const rankClass = idx < 3 ? `rank-${idx + 1}` : '';
-    const rankIcon = idx === 0 ? '🥇' : idx === 1 ? '🥈' : idx === 2 ? '🥉' : model.rank;
+    const rankIcon = idx === 0 ? '🥇' : idx === 1 ? '🥈' : idx === 2 ? '🥉' : (idx + 1);
+
+    const getCellClass = (field, value) => {
+      if (value == null) return 'score-cell';
+      const bw = bestWorst[field];
+      if (!bw) return `score-cell ${getScoreClass(value)}`;
+      
+      let classes = `score-cell ${getScoreClass(value)}`;
+      if (value === bw.best) classes += ' score-best';
+      if (value === bw.worst) classes += ' score-worst';
+      return classes;
+    };
 
     const row = document.createElement('tr');
     row.className = rankClass;
     row.innerHTML = `
       <td class="fw-bold">${rankIcon}</td>
       <td><strong>${formatModelName(model.model)}</strong></td>
-      <td class="score-cell ${getScoreClass(model.avg_total_score)}">${model.avg_total_score}</td>
-      <td class="score-cell ${getScoreClass(model.avg_prompt_adherence)}">${model.avg_prompt_adherence}</td>
-      <td class="score-cell ${getScoreClass(model.avg_structural_correctness)}">${model.avg_structural_correctness}</td>
-      <td class="score-cell ${getScoreClass(model.avg_physical_plausibility)}">${model.avg_physical_plausibility}</td>
-      <td class="score-cell ${getScoreClass(model.avg_completeness)}">${model.avg_completeness}</td>
-      <td class="score-cell ${getScoreClass(model.avg_visual_coherence)}">${model.avg_visual_coherence}</td>
+      <td class="${getCellClass('avg_total_score', model.avg_total_score)}">${(model.avg_total_score || 0).toFixed(1)}</td>
+      <td class="${getCellClass('avg_prompt_adherence', model.avg_prompt_adherence)}">${(model.avg_prompt_adherence || 0).toFixed(1)}</td>
+      <td class="${getCellClass('avg_structural_correctness', model.avg_structural_correctness)}">${(model.avg_structural_correctness || 0).toFixed(1)}</td>
+      <td class="${getCellClass('avg_physical_plausibility', model.avg_physical_plausibility)}">${(model.avg_physical_plausibility || 0).toFixed(1)}</td>
+      <td class="${getCellClass('avg_completeness', model.avg_completeness)}">${(model.avg_completeness || 0).toFixed(1)}</td>
+      <td class="${getCellClass('avg_visual_coherence', model.avg_visual_coherence)}">${(model.avg_visual_coherence || 0).toFixed(1)}</td>
     `;
     tbody.appendChild(row);
+  });
+  
+  // Add sort handlers to headers (only on first render)
+  if (!document.getElementById('summary-table').hasAttribute('data-sort-initialized')) {
+    document.getElementById('summary-table').setAttribute('data-sort-initialized', 'true');
+    const headers = document.querySelectorAll('#summary-table thead th.sortable-header');
+    headers.forEach(header => {
+      header.addEventListener('click', () => {
+        const column = header.getAttribute('data-sort');
+        if (summarySortState.column === column) {
+          summarySortState.direction = summarySortState.direction === 'asc' ? 'desc' : 'asc';
+        } else {
+          summarySortState.column = column;
+          summarySortState.direction = 'asc';
+        }
+        
+        // Update header classes
+        headers.forEach(h => {
+          h.classList.remove('sort-asc', 'sort-desc');
+          if (h.getAttribute('data-sort') === summarySortState.column) {
+            h.classList.add(summarySortState.direction === 'asc' ? 'sort-asc' : 'sort-desc');
+          }
+        });
+        
+        // Re-render table
+        renderSummaryTable(data);
+      });
+    });
+  }
+  
+  // Set sort indicator
+  const headers = document.querySelectorAll('#summary-table thead th.sortable-header');
+  headers.forEach(h => {
+    h.classList.remove('sort-asc', 'sort-desc');
+    if (h.getAttribute('data-sort') === summarySortState.column) {
+      h.classList.add(summarySortState.direction === 'asc' ? 'sort-asc' : 'sort-desc');
+    }
   });
 }
 
@@ -104,7 +513,7 @@ function generateInsights(data) {
       icon: 'bi-trophy-fill',
       color: 'success',
       title: 'Top Performer',
-      text: `<strong>${formatModelName(top.model)}</strong> leads with an average score of <strong>${top.avg_total_score}</strong>, excelling in prompt adherence (${top.avg_prompt_adherence}) and completeness (${top.avg_completeness}).`
+      text: `<strong>${formatModelName(top.model)}</strong> leads with an average score of <strong>${(top.avg_total_score || 0).toFixed(1)}</strong>, excelling in prompt adherence (${(top.avg_prompt_adherence || 0).toFixed(1)}) and completeness (${(top.avg_completeness || 0).toFixed(1)}).`
     },
     {
       icon: 'bi-exclamation-triangle-fill',
@@ -122,7 +531,7 @@ function generateInsights(data) {
       icon: 'bi-arrow-down-circle-fill',
       color: 'danger',
       title: 'Needs Improvement',
-      text: `<strong>${formatModelName(bottom.model)}</strong> scored lowest at <strong>${bottom.avg_total_score}</strong>, struggling particularly with physics (${bottom.avg_physical_plausibility}) and structure (${bottom.avg_structural_correctness}).`
+      text: `<strong>${formatModelName(bottom.model)}</strong> scored lowest at <strong>${(bottom.avg_total_score || 0).toFixed(1)}</strong>, struggling particularly with physics (${(bottom.avg_physical_plausibility || 0).toFixed(1)}) and structure (${(bottom.avg_structural_correctness || 0).toFixed(1)}).`
     },
     {
       icon: 'bi-check-circle-fill',
@@ -163,17 +572,26 @@ function renderInsights(data) {
 // Render per-prompt table
 function renderPromptsTable(data) {
   const models = data.model_rankings.map(m => m.model);
-  const prompts = data.prompt_model_scores;
+  
+  // Use sorted data if sort is active
+  const prompts = promptsSortState.column
+    ? sortPromptsTable(data, promptsSortState.column, promptsSortState.direction)
+    : data.prompt_model_scores;
 
   // Header
   const header = document.getElementById('prompts-header');
-  header.innerHTML = `<th>Prompt</th>` + models.map(m => `<th class="text-center small">${formatModelName(m).split(' ')[0]}</th>`).join('');
+  header.innerHTML = `<th class="sortable-header" data-sort="prompt">Prompt</th>` + models.map(m => `<th class="sortable-header text-center small" data-sort="${m}">${formatModelName(m).split(' ')[0]}</th>`).join('');
 
   // Body
   const tbody = document.getElementById('prompts-body');
   tbody.innerHTML = '';
 
   prompts.forEach(prompt => {
+    // Find best and worst scores for this prompt
+    const scores = models.map(m => prompt[m]).filter(s => s != null);
+    const bestScore = scores.length > 0 ? Math.max(...scores) : null;
+    const worstScore = scores.length > 0 ? Math.min(...scores) : null;
+    
     const row = document.createElement('tr');
     row.className = 'clickable-row';
     row.setAttribute('data-prompt', prompt.prompt);
@@ -182,11 +600,54 @@ function renderPromptsTable(data) {
       ${models.map(m => {
         const score = prompt[m];
         if (score == null) return '<td class="text-center text-muted">-</td>';
-        return `<td class="text-center score-cell ${getScoreClass(score)}">${score}</td>`;
+        
+        let classes = `score-cell ${getScoreClass(score)}`;
+        if (score === bestScore) classes += ' score-best';
+        if (score === worstScore) classes += ' score-worst';
+        
+        return `<td class="text-center ${classes}">${score.toFixed(1)}</td>`;
       }).join('')}
     `;
     row.addEventListener('click', () => showPromptDetail(data, prompt.prompt));
     tbody.appendChild(row);
+  });
+  
+  // Add sort handlers to headers (only on first render)
+  if (!document.getElementById('prompts-table').hasAttribute('data-sort-initialized')) {
+    document.getElementById('prompts-table').setAttribute('data-sort-initialized', 'true');
+    const headers = document.querySelectorAll('#prompts-table thead th.sortable-header');
+    headers.forEach(header => {
+      header.addEventListener('click', (e) => {
+        e.stopPropagation(); // Prevent row click
+        const column = header.getAttribute('data-sort');
+        if (promptsSortState.column === column) {
+          promptsSortState.direction = promptsSortState.direction === 'asc' ? 'desc' : 'asc';
+        } else {
+          promptsSortState.column = column;
+          promptsSortState.direction = 'asc';
+        }
+        
+        // Update header classes
+        headers.forEach(h => {
+          h.classList.remove('sort-asc', 'sort-desc');
+          if (h.getAttribute('data-sort') === promptsSortState.column) {
+            h.classList.add(promptsSortState.direction === 'asc' ? 'sort-asc' : 'sort-desc');
+          }
+        });
+        
+        // Re-render table
+        renderPromptsTable(data);
+      });
+    });
+  }
+  
+  // Set sort indicator
+  const headers = document.querySelectorAll('#prompts-table thead th.sortable-header');
+  headers.forEach(h => {
+    h.classList.remove('sort-asc', 'sort-desc');
+    if (h.getAttribute('data-sort') === promptsSortState.column) {
+      h.classList.add(promptsSortState.direction === 'asc' ? 'sort-asc' : 'sort-desc');
+    }
   });
 }
 
@@ -217,9 +678,9 @@ function showPromptDetail(data, promptNum) {
       { label: 'Visual Coherence', value: scores.visual_coherence, weight: '15%' }
     ].map(c => `
       <div class="mb-2">
-        <div class="d-flex justify-content-between small">
+        <div class="d-flex justify-content-between align-items-center small mb-1">
           <span>${c.label} <span class="text-muted">(${c.weight})</span></span>
-          <span class="fw-bold ${getScoreClass(c.value)}">${c.value}</span>
+          <span class="score-cell ${getScoreClass(c.value)}" style="padding: 0.25rem 0.5rem; font-size: 0.85rem;">${(c.value || 0).toFixed(1)}</span>
         </div>
         <div class="progress" style="height: 6px;">
           <div class="progress-bar ${c.value >= 75 ? 'bg-success' : c.value >= 50 ? 'bg-warning' : 'bg-danger'}" 
@@ -236,19 +697,23 @@ function showPromptDetail(data, promptNum) {
           <div class="card-header d-flex justify-content-between align-items-center">
             <strong>${formatModelName(model)}</strong>
             <span class="badge ${scores.total_score >= 75 ? 'bg-success' : scores.total_score >= 50 ? 'bg-warning' : 'bg-danger'} fs-6">
-              ${scores.total_score}
+              ${(scores.total_score || 0).toFixed(1)}
             </span>
           </div>
           <div class="card-body">
             <div class="mb-3 text-center">
-              <a href="${imageUrl}" target="_blank" rel="noopener noreferrer" class="d-inline-block" title="View full size">
-                <img src="${imageUrl}" 
-                     alt="${formatModelName(model)} - Prompt ${promptNum}" 
-                     class="img-fluid rounded border" 
-                     style="max-height: 200px; width: auto; cursor: pointer; background: #f8f9fa;"
-                     loading="lazy"
-                     onerror="console.error('Failed to load image:', '${imageUrl}'); this.onerror=null; this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI2Y4ZjlmYSIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiM2Yzc1N2QiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5JbWFnZSBub3QgYXZhaWxhYmxlPC90ZXh0Pjwvc3ZnPg==';">
-              </a>
+              <div class="position-relative d-inline-block" id="img-container-${model}-${promptNum}">
+                <div class="image-loading" id="loading-${model}-${promptNum}" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 10; pointer-events: none;"></div>
+                <a href="${imageUrl}" target="_blank" rel="noopener noreferrer" class="d-inline-block" title="View full size">
+                  <img src="${imageUrl}" 
+                       alt="${formatModelName(model)} - Prompt ${promptNum}" 
+                       class="img-fluid rounded border" 
+                       style="max-height: 200px; width: auto; cursor: pointer; background: #f8f9fa; position: relative; display: block;"
+                       loading="lazy"
+                       onload="const loader = document.getElementById('loading-${model}-${promptNum}'); if(loader) loader.style.display='none';"
+                       onerror="const loader = document.getElementById('loading-${model}-${promptNum}'); if(loader) loader.style.display='none'; console.error('Failed to load image:', '${imageUrl}'); this.onerror=null; this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI2Y4ZjlmYSIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiM2Yzc1N2QiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5JbWFnZSBub3QgYXZhaWxhYmxlPC90ZXh0Pjwvc3ZnPg==';">
+                </a>
+              </div>
               <div class="small text-muted mt-1">
                 <i class="bi bi-zoom-in me-1"></i>Click to view full size
               </div>
@@ -281,6 +746,20 @@ function showPromptDetail(data, promptNum) {
       ${modelCards}
     </div>
   `;
+
+  // Hide loading indicators for images that are already loaded (cached images)
+  setTimeout(() => {
+    models.forEach(model => {
+      const loaderId = `loading-${model}-${promptNum}`;
+      const loader = document.getElementById(loaderId);
+      if (loader) {
+        const img = loader.parentElement.querySelector('img');
+        if (img && img.complete && img.naturalHeight !== 0) {
+          loader.style.display = 'none';
+        }
+      }
+    });
+  }, 200);
 
   const modal = new bootstrap.Modal(document.getElementById('promptModal'));
   modal.show();
@@ -344,14 +823,18 @@ function renderPromptBreakdowns(insights) {
           <div class="row g-2 mb-2">
             <div class="col-6">
               <div class="text-center">
-                <a href="${winnerImageUrl}" target="_blank" rel="noopener noreferrer" class="d-inline-block" title="View full size">
-                  <img src="${winnerImageUrl}" 
-                       alt="Winner: ${formatModelName(p.winner)}" 
-                       class="img-fluid rounded border" 
-                       style="max-height: 120px; width: auto; cursor: pointer; background: #f8f9fa;"
-                       loading="lazy"
-                       onerror="console.error('Failed to load winner image:', '${winnerImageUrl}'); this.onerror=null; this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEyMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEyMCIgZmlsbD0iI2Y4ZjlmYSIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTIiIGZpbGw9IiM2Yzc1N2QiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5Ob3QgYXZhaWxhYmxlPC90ZXh0Pjwvc3ZnPg==';">
-                </a>
+                <div class="position-relative d-inline-block" id="img-winner-${p.prompt_num}">
+                  <div class="image-loading" id="loading-winner-${p.prompt_num}" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 10; pointer-events: none;"></div>
+                  <a href="${winnerImageUrl}" target="_blank" rel="noopener noreferrer" class="d-inline-block" title="View full size">
+                    <img src="${winnerImageUrl}" 
+                         alt="Winner: ${formatModelName(p.winner)}" 
+                         class="img-fluid rounded border" 
+                         style="max-height: 120px; width: auto; cursor: pointer; background: #f8f9fa; position: relative; display: block;"
+                         loading="lazy"
+                         onload="const loader = document.getElementById('loading-winner-${p.prompt_num}'); if(loader) loader.style.display='none';"
+                         onerror="const loader = document.getElementById('loading-winner-${p.prompt_num}'); if(loader) loader.style.display='none'; console.error('Failed to load winner image:', '${winnerImageUrl}'); this.onerror=null; this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEyMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEyMCIgZmlsbD0iI2Y4ZjlmYSIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTIiIGZpbGw9IiM2Yzc1N2QiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5Ob3QgYXZhaWxhYmxlPC90ZXh0Pjwvc3ZnPg==';">
+                    </a>
+                </div>
                 <div class="small text-success mt-1">
                   <i class="bi bi-trophy me-1"></i>Winner
                 </div>
@@ -359,14 +842,18 @@ function renderPromptBreakdowns(insights) {
             </div>
             <div class="col-6">
               <div class="text-center">
-                <a href="${loserImageUrl}" target="_blank" rel="noopener noreferrer" class="d-inline-block" title="View full size">
-                  <img src="${loserImageUrl}" 
-                       alt="Loser: ${formatModelName(p.loser)}" 
-                       class="img-fluid rounded border" 
-                       style="max-height: 120px; width: auto; cursor: pointer; background: #f8f9fa;"
-                       loading="lazy"
-                       onerror="console.error('Failed to load loser image:', '${loserImageUrl}'); this.onerror=null; this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEyMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEyMCIgZmlsbD0iI2Y4ZjlmYSIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTIiIGZpbGw9IiM2Yzc1N2QiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5Ob3QgYXZhaWxhYmxlPC90ZXh0Pjwvc3ZnPg==';">
-                </a>
+                <div class="position-relative d-inline-block" id="img-loser-${p.prompt_num}">
+                  <div class="image-loading" id="loading-loser-${p.prompt_num}" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 10; pointer-events: none;"></div>
+                  <a href="${loserImageUrl}" target="_blank" rel="noopener noreferrer" class="d-inline-block" title="View full size">
+                    <img src="${loserImageUrl}" 
+                         alt="Loser: ${formatModelName(p.loser)}" 
+                         class="img-fluid rounded border" 
+                         style="max-height: 120px; width: auto; cursor: pointer; background: #f8f9fa; position: relative; display: block;"
+                         loading="lazy"
+                         onload="const loader = document.getElementById('loading-loser-${p.prompt_num}'); if(loader) loader.style.display='none';"
+                         onerror="const loader = document.getElementById('loading-loser-${p.prompt_num}'); if(loader) loader.style.display='none'; console.error('Failed to load loser image:', '${loserImageUrl}'); this.onerror=null; this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEyMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEyMCIgZmlsbD0iI2Y4ZjlmYSIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTIiIGZpbGw9IiM2Yzc1N2QiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5Ob3QgYXZhaWxhYmxlPC90ZXh0Pjwvc3ZnPg==';">
+                    </a>
+                </div>
                 <div class="small text-danger mt-1">
                   <i class="bi bi-arrow-down me-1"></i>Lowest
                 </div>
@@ -468,13 +955,22 @@ let benchmarkData = null;
 async function init() {
   try {
     benchmarkData = await loadBenchmarkData();
+    evaluationsByPrompt = await loadEvaluationsByPrompt();
     const insights = await loadInsightsData();
     
-    renderSummaryTable(benchmarkData);
+    renderJudgeFilter(benchmarkData);
+    renderModelFilter(benchmarkData);
+    
+    // Use recalculated data if judges are filtered
+    const displayData = (selectedJudges.size > 0 && selectedJudges.size < allJudges.length && evaluationsByPrompt)
+      ? recalculateAggregatedScores(benchmarkData, evaluationsByPrompt)
+      : benchmarkData;
+    
+    renderSummaryTable(displayData);
     renderKeyFindings(insights);
     renderPromptBreakdowns(insights);
-    renderInsights(benchmarkData);
-    renderPromptsTable(benchmarkData);
+    renderInsights(displayData);
+    renderPromptsTable(displayData);
     
     // Set up modal event listener
     const promptsModal = document.getElementById('promptsModal');
