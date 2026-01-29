@@ -63,6 +63,65 @@
       animation: spin 0.8s linear infinite;
       pointer-events: none;
     }
+    /* SVG thumbnail classes - use explicit height instead of max-height for SVGs without intrinsic dimensions */
+    /* Responsive heights based on screen size */
+    .svg-thumb {
+      height: 150px;
+      width: auto;
+      display: block;
+      cursor: pointer;
+      background: #f8f9fa;
+      position: relative;
+    }
+    .svg-thumb-small {
+      height: 100px;
+      width: auto;
+      display: block;
+      cursor: pointer;
+      background: #f8f9fa;
+      position: relative;
+    }
+    /* Responsive adjustments */
+    @media (min-width: 576px) {
+      .svg-thumb {
+        height: 180px;
+      }
+      .svg-thumb-small {
+        height: 110px;
+      }
+    }
+    @media (min-width: 768px) {
+      .svg-thumb {
+        height: 200px;
+      }
+      .svg-thumb-small {
+        height: 120px;
+      }
+    }
+    @media (min-width: 992px) {
+      .svg-thumb {
+        height: 220px;
+      }
+      .svg-thumb-small {
+        height: 130px;
+      }
+    }
+    /* Loading indicator improvements for modal */
+    .position-relative .image-loading {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 1000;
+      pointer-events: none;
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 50%;
+      padding: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    }
+    [data-bs-theme="dark"] .position-relative .image-loading {
+      background: rgba(33, 37, 41, 0.9);
+    }
     img[loading="lazy"] {
       opacity: 1;
       transition: opacity 0.2s;
@@ -296,6 +355,20 @@
             </tr>
           </thead>
           <tbody id="summary-body"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Evaluator vs Generator Matrix -->
+    <section id="evaluator-matrix-section" class="mb-5">
+      <h2 class="h4 mb-3"><i class="bi bi-grid-3x3 me-2"></i>Evaluator vs Generator Comparison Matrix</h2>
+      <p class="text-muted small mb-3">Average scores showing how each evaluator rates each generator. Use this to identify evaluator bias and determine which evaluator to trust most.</p>
+      <div class="table-responsive">
+        <table class="table table-sm table-hover" id="evaluator-matrix-table">
+          <thead class="table-dark">
+            <tr id="evaluator-matrix-header"></tr>
+          </thead>
+          <tbody id="evaluator-matrix-body"></tbody>
         </table>
       </div>
     </section>

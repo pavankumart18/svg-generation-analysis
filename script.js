@@ -3,6 +3,7 @@
 // Sorting state
 let summarySortState = { column: null, direction: 'asc' };
 let promptsSortState = { column: null, direction: 'asc' };
+let evaluatorMatrixSortState = { column: null, direction: 'asc' };
 
 // Model filter state
 let selectedModels = new Set();
@@ -329,10 +330,12 @@ function renderJudgeFilter(data) {
           renderSummaryTable(recalculated);
           renderPromptsTable(recalculated);
           renderInsights(recalculated);
+          renderEvaluatorMatrix(evaluationsByPrompt);
         } else if (benchmarkData) {
           renderSummaryTable(benchmarkData);
           renderPromptsTable(benchmarkData);
           renderInsights(benchmarkData);
+          renderEvaluatorMatrix(evaluationsByPrompt);
         }
       });
     }
@@ -690,6 +693,7 @@ function showPromptDetail(data, promptNum) {
     `).join('');
 
     const imageUrl = getImageUrl(model, promptNum);
+    console.log('🔄 Starting to load image:', imageUrl);
     
     return `
       <div class="col-md-6 col-lg-4">
@@ -703,15 +707,14 @@ function showPromptDetail(data, promptNum) {
           <div class="card-body">
             <div class="mb-3 text-center">
               <div class="position-relative d-inline-block" id="img-container-${model}-${promptNum}">
-                <div class="image-loading" id="loading-${model}-${promptNum}" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 10; pointer-events: none;"></div>
+                <div class="image-loading" id="loading-${model}-${promptNum}"></div>
                 <a href="${imageUrl}" target="_blank" rel="noopener noreferrer" class="d-inline-block" title="View full size">
                   <img src="${imageUrl}" 
                        alt="${formatModelName(model)} - Prompt ${promptNum}" 
-                       class="img-fluid rounded border" 
-                       style="max-height: 200px; width: auto; cursor: pointer; background: #f8f9fa; position: relative; display: block;"
+                       class="svg-thumb rounded border" 
                        loading="lazy"
-                       onload="const loader = document.getElementById('loading-${model}-${promptNum}'); if(loader) loader.style.display='none';"
-                       onerror="const loader = document.getElementById('loading-${model}-${promptNum}'); if(loader) loader.style.display='none'; console.error('Failed to load image:', '${imageUrl}'); this.onerror=null; this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI2Y4ZjlmYSIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiM2Yzc1N2QiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5JbWFnZSBub3QgYXZhaWxhYmxlPC90ZXh0Pjwvc3ZnPg==';">
+                       onload="const loader = document.getElementById('loading-${model}-${promptNum}'); if(loader) loader.style.display='none'; console.log('✅ Image loaded successfully:', '${imageUrl}');"
+                       onerror="const loader = document.getElementById('loading-${model}-${promptNum}'); if(loader) loader.style.display='none'; console.error('❌ Failed to load image:', '${imageUrl}'); this.onerror=null; this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI2Y4ZjlmYSIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiM2Yzc1N2QiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5JbWFnZSBub3QgYXZhaWxhYmxlPC90ZXh0Pjwvc3ZnPg==';">
                 </a>
               </div>
               <div class="small text-muted mt-1">
@@ -761,7 +764,17 @@ function showPromptDetail(data, promptNum) {
     });
   }, 200);
 
-  const modal = new bootstrap.Modal(document.getElementById('promptModal'));
+  const modalElement = document.getElementById('promptModal');
+  const modal = bootstrap.Modal.getOrCreateInstance(modalElement);
+  
+  // Bootstrap handles aria-hidden automatically, but ensure it's removed when shown
+  modalElement.addEventListener('shown.bs.modal', function() {
+    // Ensure aria-hidden is removed when modal is fully shown
+    if (modalElement.classList.contains('show')) {
+      modalElement.removeAttribute('aria-hidden');
+    }
+  }, { once: false });
+  
   modal.show();
 }
 
@@ -810,6 +823,8 @@ function renderPromptBreakdowns(insights) {
   container.innerHTML = insights.prompt_breakdowns.map(p => {
     const winnerImageUrl = getImageUrl(p.winner, p.prompt_num);
     const loserImageUrl = getImageUrl(p.loser, p.prompt_num);
+    console.log('🔄 Starting to load winner image:', winnerImageUrl);
+    console.log('🔄 Starting to load loser image:', loserImageUrl);
     
     return `
     <div class="col-md-6 col-lg-4">
@@ -824,15 +839,14 @@ function renderPromptBreakdowns(insights) {
             <div class="col-6">
               <div class="text-center">
                 <div class="position-relative d-inline-block" id="img-winner-${p.prompt_num}">
-                  <div class="image-loading" id="loading-winner-${p.prompt_num}" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 10; pointer-events: none;"></div>
+                  <div class="image-loading" id="loading-winner-${p.prompt_num}"></div>
                   <a href="${winnerImageUrl}" target="_blank" rel="noopener noreferrer" class="d-inline-block" title="View full size">
                     <img src="${winnerImageUrl}" 
                          alt="Winner: ${formatModelName(p.winner)}" 
-                         class="img-fluid rounded border" 
-                         style="max-height: 120px; width: auto; cursor: pointer; background: #f8f9fa; position: relative; display: block;"
+                         class="svg-thumb-small rounded border" 
                          loading="lazy"
-                         onload="const loader = document.getElementById('loading-winner-${p.prompt_num}'); if(loader) loader.style.display='none';"
-                         onerror="const loader = document.getElementById('loading-winner-${p.prompt_num}'); if(loader) loader.style.display='none'; console.error('Failed to load winner image:', '${winnerImageUrl}'); this.onerror=null; this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEyMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEyMCIgZmlsbD0iI2Y4ZjlmYSIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTIiIGZpbGw9IiM2Yzc1N2QiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5Ob3QgYXZhaWxhYmxlPC90ZXh0Pjwvc3ZnPg==';">
+                         onload="const loader = document.getElementById('loading-winner-${p.prompt_num}'); if(loader) loader.style.display='none'; console.log('✅ Winner image loaded:', '${winnerImageUrl}');"
+                         onerror="const loader = document.getElementById('loading-winner-${p.prompt_num}'); if(loader) loader.style.display='none'; console.error('❌ Failed to load winner image:', '${winnerImageUrl}'); this.onerror=null; this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEyMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEyMCIgZmlsbD0iI2Y4ZjlmYSIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTIiIGZpbGw9IiM2Yzc1N2QiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5Ob3QgYXZhaWxhYmxlPC90ZXh0Pjwvc3ZnPg==';">
                     </a>
                 </div>
                 <div class="small text-success mt-1">
@@ -843,15 +857,14 @@ function renderPromptBreakdowns(insights) {
             <div class="col-6">
               <div class="text-center">
                 <div class="position-relative d-inline-block" id="img-loser-${p.prompt_num}">
-                  <div class="image-loading" id="loading-loser-${p.prompt_num}" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 10; pointer-events: none;"></div>
+                  <div class="image-loading" id="loading-loser-${p.prompt_num}"></div>
                   <a href="${loserImageUrl}" target="_blank" rel="noopener noreferrer" class="d-inline-block" title="View full size">
                     <img src="${loserImageUrl}" 
                          alt="Loser: ${formatModelName(p.loser)}" 
-                         class="img-fluid rounded border" 
-                         style="max-height: 120px; width: auto; cursor: pointer; background: #f8f9fa; position: relative; display: block;"
+                         class="svg-thumb-small rounded border" 
                          loading="lazy"
-                         onload="const loader = document.getElementById('loading-loser-${p.prompt_num}'); if(loader) loader.style.display='none';"
-                         onerror="const loader = document.getElementById('loading-loser-${p.prompt_num}'); if(loader) loader.style.display='none'; console.error('Failed to load loser image:', '${loserImageUrl}'); this.onerror=null; this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEyMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEyMCIgZmlsbD0iI2Y4ZjlmYSIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTIiIGZpbGw9IiM2Yzc1N2QiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5Ob3QgYXZhaWxhYmxlPC90ZXh0Pjwvc3ZnPg==';">
+                         onload="const loader = document.getElementById('loading-loser-${p.prompt_num}'); if(loader) loader.style.display='none'; console.log('✅ Loser image loaded:', '${loserImageUrl}');"
+                         onerror="const loader = document.getElementById('loading-loser-${p.prompt_num}'); if(loader) loader.style.display='none'; console.error('❌ Failed to load loser image:', '${loserImageUrl}'); this.onerror=null; this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEyMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEyMCIgZmlsbD0iI2Y4ZjlmYSIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTIiIGZpbGw9IiM2Yzc1N2QiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5Ob3QgYXZhaWxhYmxlPC90ZXh0Pjwvc3ZnPg==';">
                     </a>
                 </div>
                 <div class="small text-danger mt-1">
@@ -949,6 +962,201 @@ function renderPromptsModal(data) {
   `).join('');
 }
 
+// Calculate evaluator vs generator matrix
+function calculateEvaluatorMatrix(evaluationsData) {
+  if (!evaluationsData) return null;
+  
+  const matrix = {};
+  const generators = new Set();
+  const evaluators = new Set();
+  
+  // Collect all generators and evaluators, and calculate scores
+  Object.keys(evaluationsData).forEach(promptKey => {
+    if (!promptKey.startsWith('prompt')) return;
+    
+    const promptData = evaluationsData[promptKey];
+    if (!promptData?.svg_models) return;
+    
+    Object.keys(promptData.svg_models).forEach(generator => {
+      generators.add(generator);
+      const modelData = promptData.svg_models[generator];
+      
+      if (!modelData?.judges) return;
+      
+      if (!matrix[generator]) {
+        matrix[generator] = {};
+      }
+      
+      Object.keys(modelData.judges).forEach(evaluator => {
+        // Only include selected evaluators if filter is active
+        if (selectedJudges.size > 0 && !selectedJudges.has(evaluator)) {
+          return;
+        }
+        
+        evaluators.add(evaluator);
+        
+        if (!matrix[generator][evaluator]) {
+          matrix[generator][evaluator] = {
+            scores: [],
+            count: 0
+          };
+        }
+        
+        const judgeData = modelData.judges[evaluator];
+        if (judgeData?.total_score !== undefined) {
+          matrix[generator][evaluator].scores.push(judgeData.total_score);
+          matrix[generator][evaluator].count++;
+        }
+      });
+    });
+  });
+  
+  // Calculate averages
+  const result = {
+    generators: Array.from(generators).sort(),
+    evaluators: Array.from(evaluators).sort(),
+    matrix: {}
+  };
+  
+  result.generators.forEach(generator => {
+    result.matrix[generator] = {};
+    result.evaluators.forEach(evaluator => {
+      const data = matrix[generator]?.[evaluator];
+      if (data && data.scores.length > 0) {
+        const avg = data.scores.reduce((a, b) => a + b, 0) / data.scores.length;
+        result.matrix[generator][evaluator] = {
+          average: Math.round(avg * 10) / 10,
+          count: data.count
+        };
+      } else {
+        result.matrix[generator][evaluator] = {
+          average: null,
+          count: 0
+        };
+      }
+    });
+  });
+  
+  return result;
+}
+
+// Render evaluator vs generator matrix
+function renderEvaluatorMatrix(evaluationsData) {
+  const matrixData = calculateEvaluatorMatrix(evaluationsData);
+  if (!matrixData) {
+    document.getElementById('evaluator-matrix-body').innerHTML = `
+      <tr><td colspan="100%" class="text-center text-muted">No data available</td></tr>
+    `;
+    return;
+  }
+  
+  const header = document.getElementById('evaluator-matrix-header');
+  const body = document.getElementById('evaluator-matrix-body');
+  
+  // Render header
+  header.innerHTML = `
+    <th class="sortable-header" data-sort="generator">Generator ↓</th>
+    ${matrixData.evaluators.map(evaluatorId => `
+      <th class="sortable-header text-center small" data-sort="${evaluatorId}" title="${formatJudgeName(evaluatorId)}">
+        ${formatJudgeName(evaluatorId)}
+      </th>
+    `).join('')}
+  `;
+  
+  // Render body
+  body.innerHTML = matrixData.generators.map(generator => {
+    const row = matrixData.evaluators.map(evaluator => {
+      const cellData = matrixData.matrix[generator][evaluator];
+      if (cellData.average === null) {
+        return '<td class="text-center text-muted score-cell">—</td>';
+      }
+      const score = cellData.average;
+      const scoreClass = getScoreClass(score);
+      return `
+        <td class="score-cell ${scoreClass}">
+          ${score.toFixed(1)}
+        </td>
+      `;
+    }).join('');
+    
+    return `
+      <tr>
+        <td class="fw-medium">${formatModelName(generator)}</td>
+        ${row}
+      </tr>
+    `;
+  }).join('');
+  
+  // Set up sorting
+  setupEvaluatorMatrixSorting(matrixData);
+}
+
+// Set up sorting for evaluator matrix
+function setupEvaluatorMatrixSorting(matrixData) {
+  const headers = document.querySelectorAll('#evaluator-matrix-table thead th.sortable-header');
+  headers.forEach(header => {
+    header.addEventListener('click', () => {
+      const sortKey = header.getAttribute('data-sort');
+      if (!sortKey) return;
+      
+      // Toggle sort direction
+      if (evaluatorMatrixSortState.column === sortKey) {
+        evaluatorMatrixSortState.direction = evaluatorMatrixSortState.direction === 'asc' ? 'desc' : 'asc';
+      } else {
+        evaluatorMatrixSortState.column = sortKey;
+        evaluatorMatrixSortState.direction = 'asc';
+      }
+      
+      sortEvaluatorMatrix(matrixData);
+      updateEvaluatorMatrixSortIcons();
+    });
+  });
+}
+
+// Sort evaluator matrix
+function sortEvaluatorMatrix(matrixData) {
+  const tbody = document.getElementById('evaluator-matrix-body');
+  const rows = Array.from(tbody.querySelectorAll('tr'));
+  
+  rows.sort((a, b) => {
+    const aCell = a.querySelector('td:first-child').textContent.trim();
+    const bCell = b.querySelector('td:first-child').textContent.trim();
+    
+    if (evaluatorMatrixSortState.column === 'generator') {
+      // Sort by generator name
+      const comparison = aCell.localeCompare(bCell);
+      return evaluatorMatrixSortState.direction === 'asc' ? comparison : -comparison;
+    } else {
+      // Sort by evaluator column (average score)
+      const evaluatorIndex = matrixData.evaluators.indexOf(evaluatorMatrixSortState.column);
+      if (evaluatorIndex === -1) return 0;
+      
+      const aScoreCell = a.querySelectorAll('td')[evaluatorIndex + 1];
+      const bScoreCell = b.querySelectorAll('td')[evaluatorIndex + 1];
+      
+      const aScore = aScoreCell.textContent === '—' ? -1 : parseFloat(aScoreCell.textContent);
+      const bScore = bScoreCell.textContent === '—' ? -1 : parseFloat(bScoreCell.textContent);
+      
+      const comparison = (aScore === -1 ? -Infinity : aScore) - (bScore === -1 ? -Infinity : bScore);
+      return evaluatorMatrixSortState.direction === 'asc' ? comparison : -comparison;
+    }
+  });
+  
+  // Re-append sorted rows
+  rows.forEach(row => tbody.appendChild(row));
+}
+
+// Update sort icons for evaluator matrix
+function updateEvaluatorMatrixSortIcons() {
+  const headers = document.querySelectorAll('#evaluator-matrix-table thead th.sortable-header');
+  headers.forEach(h => {
+    h.classList.remove('sort-asc', 'sort-desc');
+    if (h.getAttribute('data-sort') === evaluatorMatrixSortState.column) {
+      h.classList.add(evaluatorMatrixSortState.direction === 'asc' ? 'sort-asc' : 'sort-desc');
+    }
+  });
+}
+
 // Initialize
 let benchmarkData = null;
 
@@ -970,6 +1178,7 @@ async function init() {
     renderKeyFindings(insights);
     renderPromptBreakdowns(insights);
     renderInsights(displayData);
+    renderEvaluatorMatrix(evaluationsByPrompt);
     renderPromptsTable(displayData);
     
     // Set up modal event listener
