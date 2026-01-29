@@ -693,7 +693,6 @@ function showPromptDetail(data, promptNum) {
     `).join('');
 
     const imageUrl = getImageUrl(model, promptNum);
-    console.log('🔄 Starting to load image:', imageUrl);
     
     return `
       <div class="col-md-6 col-lg-4">
@@ -713,8 +712,8 @@ function showPromptDetail(data, promptNum) {
                        alt="${formatModelName(model)} - Prompt ${promptNum}" 
                        class="svg-thumb rounded border" 
                        loading="lazy"
-                       onload="const loader = document.getElementById('loading-${model}-${promptNum}'); if(loader) loader.style.display='none'; console.log('✅ Image loaded successfully:', '${imageUrl}');"
-                       onerror="const loader = document.getElementById('loading-${model}-${promptNum}'); if(loader) loader.style.display='none'; console.error('❌ Failed to load image:', '${imageUrl}'); this.onerror=null; this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI2Y4ZjlmYSIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiM2Yzc1N2QiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5JbWFnZSBub3QgYXZhaWxhYmxlPC90ZXh0Pjwvc3ZnPg==';">
+                       onload="const loader = document.getElementById('loading-${model}-${promptNum}'); if(loader) loader.style.display='none';"
+                       onerror="const loader = document.getElementById('loading-${model}-${promptNum}'); if(loader) loader.style.display='none'; this.onerror=null; this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI2Y4ZjlmYSIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiM2Yzc1N2QiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5JbWFnZSBub3QgYXZhaWxhYmxlPC90ZXh0Pjwvc3ZnPg==';">
                 </a>
               </div>
               <div class="small text-muted mt-1">
@@ -798,10 +797,6 @@ function getImageUrl(modelName, promptNum) {
   const url = `${baseUrl}${modelName}_${promptStr}.svg`;
   
   // Debug logging (can be removed in production)
-  if (window.DEBUG_IMAGES) {
-    console.log(`Image URL for ${modelName} prompt ${promptNum}:`, url);
-  }
-  
   return url;
 }
 
@@ -823,8 +818,6 @@ function renderPromptBreakdowns(insights) {
   container.innerHTML = insights.prompt_breakdowns.map(p => {
     const winnerImageUrl = getImageUrl(p.winner, p.prompt_num);
     const loserImageUrl = getImageUrl(p.loser, p.prompt_num);
-    console.log('🔄 Starting to load winner image:', winnerImageUrl);
-    console.log('🔄 Starting to load loser image:', loserImageUrl);
     
     return `
     <div class="col-md-6 col-lg-4">
@@ -845,8 +838,8 @@ function renderPromptBreakdowns(insights) {
                          alt="Winner: ${formatModelName(p.winner)}" 
                          class="svg-thumb-small rounded border" 
                          loading="lazy"
-                         onload="const loader = document.getElementById('loading-winner-${p.prompt_num}'); if(loader) loader.style.display='none'; console.log('✅ Winner image loaded:', '${winnerImageUrl}');"
-                         onerror="const loader = document.getElementById('loading-winner-${p.prompt_num}'); if(loader) loader.style.display='none'; console.error('❌ Failed to load winner image:', '${winnerImageUrl}'); this.onerror=null; this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEyMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEyMCIgZmlsbD0iI2Y4ZjlmYSIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTIiIGZpbGw9IiM2Yzc1N2QiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5Ob3QgYXZhaWxhYmxlPC90ZXh0Pjwvc3ZnPg==';">
+                         onload="const loader = document.getElementById('loading-winner-${p.prompt_num}'); if(loader) loader.style.display='none';"
+                         onerror="const loader = document.getElementById('loading-winner-${p.prompt_num}'); if(loader) loader.style.display='none'; this.onerror=null; this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEyMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEyMCIgZmlsbD0iI2Y4ZjlmYSIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTIiIGZpbGw9IiM2Yzc1N2QiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5Ob3QgYXZhaWxhYmxlPC90ZXh0Pjwvc3ZnPg==';">
                     </a>
                 </div>
                 <div class="small text-success mt-1">
@@ -863,8 +856,8 @@ function renderPromptBreakdowns(insights) {
                          alt="Loser: ${formatModelName(p.loser)}" 
                          class="svg-thumb-small rounded border" 
                          loading="lazy"
-                         onload="const loader = document.getElementById('loading-loser-${p.prompt_num}'); if(loader) loader.style.display='none'; console.log('✅ Loser image loaded:', '${loserImageUrl}');"
-                         onerror="const loader = document.getElementById('loading-loser-${p.prompt_num}'); if(loader) loader.style.display='none'; console.error('❌ Failed to load loser image:', '${loserImageUrl}'); this.onerror=null; this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEyMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEyMCIgZmlsbD0iI2Y4ZjlmYSIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTIiIGZpbGw9IiM2Yzc1N2QiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5Ob3QgYXZhaWxhYmxlPC90ZXh0Pjwvc3ZnPg==';">
+                         onload="const loader = document.getElementById('loading-loser-${p.prompt_num}'); if(loader) loader.style.display='none';"
+                         onerror="const loader = document.getElementById('loading-loser-${p.prompt_num}'); if(loader) loader.style.display='none'; this.onerror=null; this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEyMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEyMCIgZmlsbD0iI2Y4ZjlmYSIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTIiIGZpbGw9IiM2Yzc1N2QiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5Ob3QgYXZhaWxhYmxlPC90ZXh0Pjwvc3ZnPg==';">
                     </a>
                 </div>
                 <div class="small text-danger mt-1">
@@ -1191,7 +1184,6 @@ async function init() {
       });
     }
   } catch (error) {
-    console.error('Failed to load benchmark data:', error);
     document.getElementById('summary-body').innerHTML = `
       <tr><td colspan="8" class="text-center text-danger">
         <i class="bi bi-exclamation-triangle me-2"></i>Failed to load benchmark data
