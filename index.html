@@ -14,37 +14,23 @@
       border-radius: 0;
       border: 1px solid rgba(0, 0, 0, 0.2) !important;
       text-align: center;
-      color: #000 !important;
     }
     [data-bs-theme="dark"] .score-cell {
       border-color: rgba(255, 255, 255, 0.2) !important;
     }
-    .score-high { 
-      background-color: #198754 !important;
-      color: #fff !important;
+    #color-legend {
+      width: 100%;
+      min-height: 40px;
     }
-    .score-mid { 
-      background-color: #ffc107 !important;
-      color: #000 !important;
+    [data-bs-theme="dark"] #color-legend svg text {
+      fill: #ccc !important;
     }
-    .score-low { 
-      background-color: #dc3545 !important;
-      color: #fff !important;
+    [data-bs-theme="dark"] #color-legend svg line {
+      stroke: #999 !important;
     }
-    [data-bs-theme="dark"] .score-cell {
-      color: #fff !important;
-    }
-    [data-bs-theme="dark"] .score-high {
-      background-color: #198754 !important;
-      color: #fff !important;
-    }
-    [data-bs-theme="dark"] .score-mid {
-      background-color: #ffc107 !important;
-      color: #000 !important;
-    }
-    [data-bs-theme="dark"] .score-low {
-      background-color: #dc3545 !important;
-      color: #fff !important;
+    [data-bs-theme="dark"] .bg-light {
+      background-color: #2d2d2d !important;
+      color: #e0e0e0 !important;
     }
     .score-best {
       box-shadow: 0 0 0 2px #0d6efd;
@@ -253,6 +239,46 @@
       </div>
     </div>
 
+    <!-- Color Legend -->
+    <div class="row mb-4">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header bg-secondary text-white">
+            <h5 class="mb-0"><i class="bi bi-palette me-2"></i>Score Color Legend</h5>
+          </div>
+          <div class="card-body">
+            <p class="text-muted small mb-3">Scores are color-coded using a continuous scale from red (low) to yellow (mid) to green (high):</p>
+            <div id="color-legend" class="mb-2"></div>
+            <div class="d-flex justify-content-between small text-muted">
+              <span>0 (Low)</span>
+              <span>50 (Mid)</span>
+              <span>100 (High)</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Color Legend -->
+    <div class="row mb-4">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header bg-secondary text-white">
+            <h5 class="mb-0"><i class="bi bi-palette me-2"></i>Score Color Legend</h5>
+          </div>
+          <div class="card-body">
+            <p class="text-muted small mb-3">Scores are color-coded using a continuous scale from red (low) to yellow (mid) to green (high):</p>
+            <div id="color-legend" class="mb-2"></div>
+            <div class="d-flex justify-content-between small text-muted">
+              <span>0 (Low)</span>
+              <span>50 (Mid)</span>
+              <span>100 (High)</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- Methodology Overview -->
     <div class="row mb-4">
       <div class="col-lg-8">
@@ -458,6 +484,7 @@
     </div>
   </footer>
 
+  <script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@gramex/ui@0.3.1/dist/dark-theme.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
   <script type="module" src="script.js"></script>

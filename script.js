@@ -40,11 +40,52 @@ async function loadEvaluationsByPrompt() {
   }
 }
 
-// Score color helper
+// Continuous color scale using D3 (red -> yellow -> green)
+// Score range: 0-100
+// Ensure D3 is available (loaded via script tag before this module)
+const d3Lib = window.d3 || d3;
+const colorScale = d3Lib.scaleSequential()
+  .domain([0, 100])
+  .interpolator(d3Lib.interpolateRgb(
+    d3Lib.rgb(220, 53, 69),  // Red for low scores
+    d3Lib.rgb(255, 193, 7)   // Yellow for mid scores
+  ));
+
+const colorScaleHigh = d3Lib.scaleSequential()
+  .domain([50, 100])
+  .interpolator(d3Lib.interpolateRgb(
+    d3Lib.rgb(255, 193, 7),  // Yellow at 50
+    d3Lib.rgb(25, 135, 84)   // Green at 100
+  ));
+
+// Get score color and text color based on continuous scale
+function getScoreStyle(score) {
+  if (score == null || isNaN(score)) {
+    return { backgroundColor: 'transparent', color: 'inherit' };
+  }
+  
+  // Use red-yellow scale for 0-50, yellow-green scale for 50-100
+  let bgColor;
+  if (score <= 50) {
+    bgColor = colorScale(score);
+  } else {
+    bgColor = colorScaleHigh(score);
+  }
+  
+  // Calculate luminance to determine text color (white or black)
+  const rgb = d3Lib.rgb(bgColor);
+  const luminance = (0.299 * rgb.r + 0.587 * rgb.g + 0.114 * rgb.b) / 255;
+  const textColor = luminance > 0.5 ? '#000' : '#fff';
+  
+  return {
+    backgroundColor: bgColor,
+    color: textColor
+  };
+}
+
+// Legacy function for backward compatibility (now returns empty string, styles applied inline)
 function getScoreClass(score) {
-  if (score >= 75) return 'score-high';
-  if (score >= 50) return 'score-mid';
-  return 'score-low';
+  return 'score-cell'; // Just return base class, color applied via style
 }
 
 // Format model name for display
@@ -409,12 +450,18 @@ function renderSummaryTable(data) {
     const getCellClass = (field, value) => {
       if (value == null) return 'score-cell';
       const bw = bestWorst[field];
-      if (!bw) return `score-cell ${getScoreClass(value)}`;
-      
-      let classes = `score-cell ${getScoreClass(value)}`;
-      if (value === bw.best) classes += ' score-best';
-      if (value === bw.worst) classes += ' score-worst';
+      let classes = 'score-cell';
+      if (bw) {
+        if (value === bw.best) classes += ' score-best';
+        if (value === bw.worst) classes += ' score-worst';
+      }
       return classes;
+    };
+    
+    const getCellStyle = (value) => {
+      if (value == null) return '';
+      const style = getScoreStyle(value);
+      return `background-color: ${style.backgroundColor}; color: ${style.color};`;
     };
 
     const row = document.createElement('tr');
@@ -422,12 +469,12 @@ function renderSummaryTable(data) {
     row.innerHTML = `
       <td class="fw-bold">${rankIcon}</td>
       <td><strong>${formatModelName(model.model)}</strong></td>
-      <td class="${getCellClass('avg_total_score', model.avg_total_score)}">${(model.avg_total_score || 0).toFixed(1)}</td>
-      <td class="${getCellClass('avg_prompt_adherence', model.avg_prompt_adherence)}">${(model.avg_prompt_adherence || 0).toFixed(1)}</td>
-      <td class="${getCellClass('avg_structural_correctness', model.avg_structural_correctness)}">${(model.avg_structural_correctness || 0).toFixed(1)}</td>
-      <td class="${getCellClass('avg_physical_plausibility', model.avg_physical_plausibility)}">${(model.avg_physical_plausibility || 0).toFixed(1)}</td>
-      <td class="${getCellClass('avg_completeness', model.avg_completeness)}">${(model.avg_completeness || 0).toFixed(1)}</td>
-      <td class="${getCellClass('avg_visual_coherence', model.avg_visual_coherence)}">${(model.avg_visual_coherence || 0).toFixed(1)}</td>
+      <td class="${getCellClass('avg_total_score', model.avg_total_score)}" style="${getCellStyle(model.avg_total_score)}">${(model.avg_total_score || 0).toFixed(1)}</td>
+      <td class="${getCellClass('avg_prompt_adherence', model.avg_prompt_adherence)}" style="${getCellStyle(model.avg_prompt_adherence)}">${(model.avg_prompt_adherence || 0).toFixed(1)}</td>
+      <td class="${getCellClass('avg_structural_correctness', model.avg_structural_correctness)}" style="${getCellStyle(model.avg_structural_correctness)}">${(model.avg_structural_correctness || 0).toFixed(1)}</td>
+      <td class="${getCellClass('avg_physical_plausibility', model.avg_physical_plausibility)}" style="${getCellStyle(model.avg_physical_plausibility)}">${(model.avg_physical_plausibility || 0).toFixed(1)}</td>
+      <td class="${getCellClass('avg_completeness', model.avg_completeness)}" style="${getCellStyle(model.avg_completeness)}">${(model.avg_completeness || 0).toFixed(1)}</td>
+      <td class="${getCellClass('avg_visual_coherence', model.avg_visual_coherence)}" style="${getCellStyle(model.avg_visual_coherence)}">${(model.avg_visual_coherence || 0).toFixed(1)}</td>
     `;
     tbody.appendChild(row);
   });
@@ -604,11 +651,12 @@ function renderPromptsTable(data) {
         const score = prompt[m];
         if (score == null) return '<td class="text-center text-muted">-</td>';
         
-        let classes = `score-cell ${getScoreClass(score)}`;
+        let classes = 'score-cell';
         if (score === bestScore) classes += ' score-best';
         if (score === worstScore) classes += ' score-worst';
         
-        return `<td class="text-center ${classes}">${score.toFixed(1)}</td>`;
+        const style = getScoreStyle(score);
+        return `<td class="text-center ${classes}" style="background-color: ${style.backgroundColor}; color: ${style.color};">${score.toFixed(1)}</td>`;
       }).join('')}
     `;
     row.addEventListener('click', () => showPromptDetail(data, prompt.prompt));
@@ -683,7 +731,7 @@ function showPromptDetail(data, promptNum) {
       <div class="mb-2">
         <div class="d-flex justify-content-between align-items-center small mb-1">
           <span>${c.label} <span class="text-muted">(${c.weight})</span></span>
-          <span class="score-cell ${getScoreClass(c.value)}" style="padding: 0.25rem 0.5rem; font-size: 0.85rem;">${(c.value || 0).toFixed(1)}</span>
+          <span class="score-cell" style="padding: 0.25rem 0.5rem; font-size: 0.85rem; ${(() => { const s = getScoreStyle(c.value); return `background-color: ${s.backgroundColor}; color: ${s.color};`; })()}">${(c.value || 0).toFixed(1)}</span>
         </div>
         <div class="progress" style="height: 6px;">
           <div class="progress-bar ${c.value >= 75 ? 'bg-success' : c.value >= 50 ? 'bg-warning' : 'bg-danger'}" 
@@ -691,6 +739,67 @@ function showPromptDetail(data, promptNum) {
         </div>
       </div>
     `).join('');
+
+    // Get notes from evaluations_by_prompt
+    let notesHtml = '';
+    if (evaluationsByPrompt) {
+      const promptKey = `prompt${promptNum}`;
+      const modelData = evaluationsByPrompt[promptKey]?.svg_models?.[model];
+      if (modelData && modelData.judges) {
+        const gemini3FlashNote = modelData.judges['gemini-3-flash']?.notes;
+        const otherNotes = [];
+        
+        Object.entries(modelData.judges).forEach(([judge, judgeData]) => {
+          if (judgeData.notes && judge !== 'gemini-3-flash') {
+            otherNotes.push({
+              judge: formatJudgeName(judge),
+              note: judgeData.notes
+            });
+          }
+        });
+        
+        // Always show Gemini 3 Flash note if available
+        let geminiNoteHtml = '';
+        if (gemini3FlashNote) {
+          geminiNoteHtml = `
+            <div class="mt-3 pt-3 border-top">
+              <div class="p-3 bg-light rounded border">
+                <strong class="text-primary d-block mb-2">
+                  <i class="bi bi-star-fill me-1"></i>Gemini 3 Flash:
+                </strong>
+                <p class="mb-0 text-muted small">${gemini3FlashNote}</p>
+              </div>
+            </div>
+          `;
+        }
+        
+        // Show other judges' notes in collapsible section
+        let otherNotesHtml = '';
+        if (otherNotes.length > 0) {
+          otherNotesHtml = `
+            <div class="mt-3">
+              <button class="btn btn-sm btn-outline-secondary w-100" type="button" data-bs-toggle="collapse" data-bs-target="#other-notes-${model}-${promptNum}" aria-expanded="false" aria-controls="other-notes-${model}-${promptNum}">
+                <i class="bi bi-file-text me-2"></i>Other Judges' Notes (${otherNotes.length})
+              </button>
+              <div class="collapse mt-2" id="other-notes-${model}-${promptNum}">
+                <div class="small">
+                  ${otherNotes.map(n => `
+                    <div class="mb-2 p-2 bg-light rounded">
+                      <strong class="text-primary">${n.judge}:</strong>
+                      <p class="mb-0 mt-1 text-muted">${n.note}</p>
+                    </div>
+                  `).join('')}
+                </div>
+              </div>
+            </div>
+          `;
+        }
+        
+        if (geminiNoteHtml || otherNotesHtml) {
+          notesHtml = geminiNoteHtml + otherNotesHtml;
+        }
+      }
+    }
 
     const imageUrl = getImageUrl(model, promptNum);
     
@@ -721,6 +830,7 @@ function showPromptDetail(data, promptNum) {
               </div>
             </div>
             ${criteriaHtml}
+            ${notesHtml}
           </div>
         </div>
       </div>
@@ -1064,9 +1174,9 @@ function renderEvaluatorMatrix(evaluationsData) {
         return '<td class="text-center text-muted score-cell">—</td>';
       }
       const score = cellData.average;
-      const scoreClass = getScoreClass(score);
+      const style = getScoreStyle(score);
       return `
-        <td class="score-cell ${scoreClass}">
+        <td class="score-cell" style="background-color: ${style.backgroundColor}; color: ${style.color};">
           ${score.toFixed(1)}
         </td>
       `;
@@ -1150,11 +1260,111 @@ function updateEvaluatorMatrixSortIcons() {
   });
 }
 
+// Render color legend
+function renderColorLegend() {
+  const legendContainer = document.getElementById('color-legend');
+  if (!legendContainer) return;
+  
+  const d3Lib = window.d3 || d3;
+  // Use container width or fallback to a reasonable default
+  let width = legendContainer.offsetWidth;
+  if (!width || width === 0) {
+    // Try to get parent width or use viewport-based calculation
+    const parent = legendContainer.parentElement;
+    width = parent ? parent.offsetWidth - 40 : 800; // Account for padding
+  }
+  const height = 40;
+  
+  // Clear any existing content
+  legendContainer.innerHTML = '';
+  
+  // Create SVG with responsive viewBox
+  const svg = d3Lib.select('#color-legend')
+    .append('svg')
+    .attr('width', '100%')
+    .attr('height', height)
+    .attr('viewBox', `0 0 ${width} ${height}`)
+    .attr('preserveAspectRatio', 'none')
+    .style('border-radius', '4px')
+    .style('border', '1px solid rgba(0,0,0,0.1)');
+  
+  // Create gradient definition
+  const gradient = svg.append('defs')
+    .append('linearGradient')
+    .attr('id', 'score-gradient')
+    .attr('x1', '0%')
+    .attr('x2', '100%');
+  
+  // Add color stops for 0-50 (red to yellow)
+  for (let i = 0; i <= 50; i++) {
+    const color = colorScale(i);
+    gradient.append('stop')
+      .attr('offset', `${(i / 100) * 100}%`)
+      .attr('stop-color', color);
+  }
+  
+  // Add color stops for 50-100 (yellow to green)
+  for (let i = 51; i <= 100; i++) {
+    const color = colorScaleHigh(i);
+    gradient.append('stop')
+      .attr('offset', `${(i / 100) * 100}%`)
+      .attr('stop-color', color);
+  }
+  
+  // Draw gradient rectangle
+  svg.append('rect')
+    .attr('width', width)
+    .attr('height', height)
+    .attr('fill', 'url(#score-gradient)');
+  
+  // Add tick marks and labels
+  const ticks = [0, 25, 50, 75, 100];
+  ticks.forEach(tick => {
+    const x = (tick / 100) * width;
+    
+    // Tick line
+    svg.append('line')
+      .attr('x1', x)
+      .attr('x2', x)
+      .attr('y1', height - 8)
+      .attr('y2', height)
+      .attr('stroke', '#666')
+      .attr('stroke-width', 1);
+    
+    // Label
+    svg.append('text')
+      .attr('x', x)
+      .attr('y', height - 12)
+      .attr('text-anchor', 'middle')
+      .attr('font-size', '11px')
+      .attr('fill', '#333')
+      .attr('class', 'legend-label')
+      .text(tick);
+  });
+  
+  // Update text color based on theme
+  const isDark = document.documentElement.getAttribute('data-bs-theme') === 'dark';
+  if (isDark) {
+    svg.selectAll('.legend-label').attr('fill', '#ccc');
+    svg.selectAll('line').attr('stroke', '#999');
+  }
+}
+
 // Initialize
 let benchmarkData = null;
 
 async function init() {
   try {
+    // Render color legend first (doesn't need data)
+    // Use setTimeout to ensure container has width
+    setTimeout(() => {
+      renderColorLegend();
+      // Re-render on window resize
+      window.addEventListener('resize', () => {
+        renderColorLegend();
+      });
+    }, 100);
+    
     benchmarkData = await loadBenchmarkData();
     evaluationsByPrompt = await loadEvaluationsByPrompt();
     const insights = await loadInsightsData();
