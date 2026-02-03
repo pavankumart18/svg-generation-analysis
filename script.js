@@ -13,6 +13,7 @@ let allModels = [];
 let selectedJudges = new Set();
 let allJudges = [];
 let evaluationsByPrompt = null;
+let gemini3FlashReasons = null;
 
 // Load benchmark data
 async function loadBenchmarkData() {
@@ -34,6 +35,16 @@ async function loadInsightsData() {
 async function loadEvaluationsByPrompt() {
   try {
     const response = await fetch('evaluations_by_prompt.json');
+    return await response.json();
+  } catch (e) {
+    return null;
+  }
+}
+
+// Load Gemini 3 Flash per-criterion reasons (for prompt modal)
+async function loadGemini3FlashReasons() {
+  try {
+    const response = await fetch('gemini3_flash_reasons.json');
     return await response.json();
   } catch (e) {
     return null;
@@ -721,13 +732,16 @@ function showPromptDetail(data, promptNum) {
     const scores = detailedScores[model]?.[promptNum];
     if (!scores) return '';
 
+    const promptReasons = gemini3FlashReasons && gemini3FlashReasons[String(promptNum)] && gemini3FlashReasons[String(promptNum)][model];
     const criteriaHtml = [
-      { label: 'Prompt Adherence', value: scores.prompt_adherence, weight: '30%' },
-      { label: 'Structural Correctness', value: scores.structural_correctness, weight: '20%' },
-      { label: 'Physical Plausibility', value: scores.physical_plausibility, weight: '20%' },
-      { label: 'Completeness', value: scores.completeness, weight: '15%' },
-      { label: 'Visual Coherence', value: scores.visual_coherence, weight: '15%' }
-    ].map(c => `
+      { key: 'prompt_adherence', label: 'Prompt Adherence', value: scores.prompt_adherence, weight: '30%' },
+      { key: 'structural_correctness', label: 'Structural Correctness', value: scores.structural_correctness, weight: '20%' },
+      { key: 'physical_plausibility', label: 'Physical Plausibility', value: scores.physical_plausibility, weight: '20%' },
+      { key: 'completeness', label: 'Completeness', value: scores.completeness, weight: '15%' },
+      { key: 'visual_coherence', label: 'Visual Coherence', value: scores.visual_coherence, weight: '15%' }
+    ].map(c => {
+      const reason = promptReasons && promptReasons[c.key] && promptReasons[c.key].reason;
+      return `
       <div class="mb-2">
         <div class="d-flex justify-content-between align-items-center small mb-1">
           <span>${c.label} <span class="text-muted">(${c.weight})</span></span>
@@ -737,8 +751,10 @@ function showPromptDetail(data, promptNum) {
           <div class="progress-bar ${c.value >= 75 ? 'bg-success' : c.value >= 50 ? 'bg-warning' : 'bg-danger'}" 
                style="width: ${c.value}%"></div>
         </div>
+        ${reason ? `<p class="small text-muted mb-0 mt-1 ps-0"><i class="bi bi-chat-quote me-1"></i><strong>Gemini 3 Flash:</strong> ${reason}</p>` : ''}
       </div>
-    `).join('');
+    `;
+    }).join('');
 
     // Get notes from evaluations_by_prompt
     let notesHtml = '';
@@ -849,8 +865,7 @@ function showPromptDetail(data, promptNum) {
         and their scores were averaged to produce the final scores below. Click on any image to view it in full size.
         <br>
         <i class="bi bi-exclamation-triangle me-1"></i>
-        <strong>Note:</strong> If images don't load, check the browser console (F12) for errors. Images are loaded from: 
-        <code>https://gally.net/temp/20251107pelican-alternatives/svgs/</code>
+        <strong>Note:</strong> If images don't load, check the browser console (F12). Images are loaded from the project's <code>images/</code> folder (path: <code>${IMAGE_BASE_URL}</code>).
       </small>
     </div>
     <h6 class="mb-3"><i class="bi bi-grid-3x3-gap me-2"></i>Model Comparison (sorted by score)</h6>
@@ -887,27 +902,29 @@ function showPromptDetail(data, promptNum) {
   modal.show();
 }
 
+// Base URL for SVG images.
+const IMAGE_BASE_URL = typeof window !== 'undefined' && window.IMAGE_BASE_URL != null
+  ? window.IMAGE_BASE_URL
+  : 'https://gally.net/temp/20251107pelican-alternatives/svgs/';
+
 // Helper function to get image URL
 // Handles both prompt numbering formats: prompt01 and prompt1
 function getImageUrl(modelName, promptNum) {
-  const baseUrl = 'https://gally.net/temp/20251107pelican-alternatives/svgs/';
-  
+  const baseUrl = IMAGE_BASE_URL.endsWith('/') ? IMAGE_BASE_URL : IMAGE_BASE_URL + '/';
+
   // Models that use leading zero format (prompt01, prompt02, etc.)
   const leadingZeroModels = [
     'google_gemini-3.0-pro',
     'openai-gpt-5.1',
     'openai-gpt-5.2-pro'
   ];
-  
+
   // Format prompt number based on model
-  const promptStr = leadingZeroModels.includes(modelName) 
+  const promptStr = leadingZeroModels.includes(modelName)
     ? `prompt${String(promptNum).padStart(2, '0')}`  // prompt01, prompt02, etc.
     : `prompt${promptNum}`;  // prompt1, prompt2, etc.
-  
-  const url = `${baseUrl}${modelName}_${promptStr}.svg`;
-  
-  // Debug logging (can be removed in production)
-  return url;
+
+  return `${baseUrl}${modelName}_${promptStr}.svg`;
 }
 
 // Render key findings from GPT analysis
@@ -1367,6 +1384,7 @@ async function init() {
     
     benchmarkData = await loadBenchmarkData();
     evaluationsByPrompt = await loadEvaluationsByPrompt();
+    gemini3FlashReasons = await loadGemini3FlashReasons();
     const insights = await loadInsightsData();
     
     renderJudgeFilter(benchmarkData);
