@@ -51,43 +51,23 @@ async function loadGemini3FlashReasons() {
   }
 }
 
-// Continuous color scale using D3 (red -> yellow -> green)
-// Score range: 0-100
-// Ensure D3 is available (loaded via script tag before this module)
+// Fixed D3 diverging scale: low (0) → neutral (50) → high (100)
+// Uses built-in interpolateRdYlGn (red → yellow → green), no hardcoded colors
+const SCORE_DOMAIN = [0, 50, 100];
 const d3Lib = window.d3 || d3;
-const colorScale = d3Lib.scaleSequential()
-  .domain([0, 100])
-  .interpolator(d3Lib.interpolateRgb(
-    d3Lib.rgb(220, 53, 69),  // Red for low scores
-    d3Lib.rgb(255, 193, 7)   // Yellow for mid scores
-  ));
+const colorScale = d3Lib.scaleDiverging()
+  .domain(SCORE_DOMAIN)
+  .interpolator(d3Lib.interpolateRdYlGn);
 
-const colorScaleHigh = d3Lib.scaleSequential()
-  .domain([50, 100])
-  .interpolator(d3Lib.interpolateRgb(
-    d3Lib.rgb(255, 193, 7),  // Yellow at 50
-    d3Lib.rgb(25, 135, 84)   // Green at 100
-  ));
-
-// Get score color and text color based on continuous scale
+// Get score color and text color from the diverging scale
 function getScoreStyle(score) {
   if (score == null || isNaN(score)) {
     return { backgroundColor: 'transparent', color: 'inherit' };
   }
-  
-  // Use red-yellow scale for 0-50, yellow-green scale for 50-100
-  let bgColor;
-  if (score <= 50) {
-    bgColor = colorScale(score);
-  } else {
-    bgColor = colorScaleHigh(score);
-  }
-  
-  // Calculate luminance to determine text color (white or black)
+  const bgColor = colorScale(score);
   const rgb = d3Lib.rgb(bgColor);
   const luminance = (0.299 * rgb.r + 0.587 * rgb.g + 0.114 * rgb.b) / 255;
   const textColor = luminance > 0.5 ? '#000' : '#fff';
-  
   return {
     backgroundColor: bgColor,
     color: textColor
@@ -1277,111 +1257,11 @@ function updateEvaluatorMatrixSortIcons() {
   });
 }
 
-// Render color legend
-function renderColorLegend() {
-  const legendContainer = document.getElementById('color-legend');
-  if (!legendContainer) return;
-  
-  const d3Lib = window.d3 || d3;
-  // Use container width or fallback to a reasonable default
-  let width = legendContainer.offsetWidth;
-  if (!width || width === 0) {
-    // Try to get parent width or use viewport-based calculation
-    const parent = legendContainer.parentElement;
-    width = parent ? parent.offsetWidth - 40 : 800; // Account for padding
-  }
-  const height = 40;
-  
-  // Clear any existing content
-  legendContainer.innerHTML = '';
-  
-  // Create SVG with responsive viewBox
-  const svg = d3Lib.select('#color-legend')
-    .append('svg')
-    .attr('width', '100%')
-    .attr('height', height)
-    .attr('viewBox', `0 0 ${width} ${height}`)
-    .attr('preserveAspectRatio', 'none')
-    .style('border-radius', '4px')
-    .style('border', '1px solid rgba(0,0,0,0.1)');
-  
-  // Create gradient definition
-  const gradient = svg.append('defs')
-    .append('linearGradient')
-    .attr('id', 'score-gradient')
-    .attr('x1', '0%')
-    .attr('x2', '100%');
-  
-  // Add color stops for 0-50 (red to yellow)
-  for (let i = 0; i <= 50; i++) {
-    const color = colorScale(i);
-    gradient.append('stop')
-      .attr('offset', `${(i / 100) * 100}%`)
-      .attr('stop-color', color);
-  }
-  
-  // Add color stops for 50-100 (yellow to green)
-  for (let i = 51; i <= 100; i++) {
-    const color = colorScaleHigh(i);
-    gradient.append('stop')
-      .attr('offset', `${(i / 100) * 100}%`)
-      .attr('stop-color', color);
-  }
-  
-  // Draw gradient rectangle
-  svg.append('rect')
-    .attr('width', width)
-    .attr('height', height)
-    .attr('fill', 'url(#score-gradient)');
-  
-  // Add tick marks and labels
-  const ticks = [0, 25, 50, 75, 100];
-  ticks.forEach(tick => {
-    const x = (tick / 100) * width;
-    
-    // Tick line
-    svg.append('line')
-      .attr('x1', x)
-      .attr('x2', x)
-      .attr('y1', height - 8)
-      .attr('y2', height)
-      .attr('stroke', '#666')
-      .attr('stroke-width', 1);
-    
-    // Label
-    svg.append('text')
-      .attr('x', x)
-      .attr('y', height - 12)
-      .attr('text-anchor', 'middle')
-      .attr('font-size', '11px')
-      .attr('fill', '#333')
-      .attr('class', 'legend-label')
-      .text(tick);
-  });
-  
-  // Update text color based on theme
-  const isDark = document.documentElement.getAttribute('data-bs-theme') === 'dark';
-  if (isDark) {
-    svg.selectAll('.legend-label').attr('fill', '#ccc');
-    svg.selectAll('line').attr('stroke', '#999');
-  }
-}
-
 // Initialize
 let benchmarkData = null;
 
 async function init() {
   try {
-    // Render color legend first (doesn't need data)
-    // Use setTimeout to ensure container has width
-    setTimeout(() => {
-      renderColorLegend();
-      // Re-render on window resize
-      window.addEventListener('resize', () => {
-        renderColorLegend();
-      });
-    }, 100);
-    
     benchmarkData = await loadBenchmarkData();
     evaluationsByPrompt = await loadEvaluationsByPrompt();
     gemini3FlashReasons = await loadGemini3FlashReasons();
