@@ -349,6 +349,36 @@
       </div>
     </section>
 
+    <!-- Evaluator insight cards (independence, style, trust) -->
+    <section id="evaluator-insight-cards" class="mb-5">
+      <div class="d-flex flex-column gap-3">
+        <div class="card insight-card">
+          <div class="card-body">
+            <h5 class="card-title h6 mb-2"><i class="bi bi-shield-check me-2 text-primary"></i>Evaluators behave largely independently of specific generators</h5>
+            <p class="card-text small text-muted mb-2">A chi-square independence analysis shows that evaluator scores are almost entirely explained by two global effects: overall generator strength and overall evaluator strictness. The interaction between specific evaluators and specific generators is extremely small (χ² = 7.88, df = 54, p ≈ 1, Cramér's V ≈ 0.016).</p>
+            <p class="card-text small text-muted mb-0">In practical terms, evaluators are <em>not</em> strongly favoring or penalizing particular generators. They apply a relatively consistent scoring style across all models. Differences in scores mostly reflect how strong a generator is overall and whether an evaluator is generally strict or lenient — not evaluator favoritism.</p>
+            <p class="small text-primary mt-2 mb-0"><strong>Why this matters:</strong> Rankings are not driven by hidden evaluator bias.</p>
+          </div>
+        </div>
+        <div class="card insight-card">
+          <div class="card-body">
+            <h5 class="card-title h6 mb-2"><i class="bi bi-sliders me-2 text-primary"></i>Evaluators differ mainly in harshness and discrimination, not preference</h5>
+            <p class="card-text small text-muted mb-2">Evaluators show clear differences in scoring style. Some are consistently harsher or more lenient, while others use a narrower or broader scoring range. For example, <strong>Allen AI Molmo 8B</strong> is the harshest evaluator (lowest mean score), while <strong>Gemini 3 Flash</strong> is the most lenient. <strong>Google Gemma 3 27B</strong> shows the most compressed range, differentiating models the least, whereas <strong>Gemini Flash Image</strong> spreads scores the most.</p>
+            <p class="card-text small text-muted mb-0">These differences reflect <em>calibration</em>, not bias. High agreement between evaluators (Spearman ρ ≈ 0.95–0.99) indicates that, despite stylistic differences, evaluators largely agree on relative model quality.</p>
+            <p class="small text-primary mt-2 mb-0"><strong>Why this matters:</strong> Raw score differences reflect style, not unreliability.</p>
+          </div>
+        </div>
+        <div class="card insight-card">
+          <div class="card-body">
+            <h5 class="card-title h6 mb-2"><i class="bi bi-award me-2 text-primary"></i>Most reliable evaluators vs. mild idiosyncrasies</h5>
+            <p class="card-text small text-muted mb-2">While overall interaction effects are minimal, a few mild quirks exist. For example, <strong>Gemini Flash Image</strong> scores GPT-5.2 Pro higher than expected and is slightly harsher on weaker generators, while <strong>Google Gemma 3 27B</strong> is unusually generous to Grok. None of these deviations are large enough to indicate serious bias.</p>
+            <p class="card-text small text-muted mb-0">If a single evaluator must be trusted most, <strong>Gemini 3 Flash</strong> stands out: it shows extremely high agreement with others, low idiosyncratic behavior, and a reasonable scoring range. It balances neutrality with discrimination, making it the best overall reviewer. For stress-testing, <strong>Allen AI Molmo 8B</strong> is useful — provided its harsher scale is normalized.</p>
+            <p class="small text-primary mt-2 mb-0"><strong>Why this matters:</strong> Answers &quot;which evaluator should I trust and why?&quot;</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- Key Findings Section (GPT Analysis) -->
     <section id="findings-section" class="mb-5">
       <h2 class="h4 mb-3"><i class="bi bi-search me-2"></i>Key Findings</h2>

@@ -621,7 +621,7 @@ function renderPromptsTable(data) {
 
   // Header
   const header = document.getElementById('prompts-header');
-  header.innerHTML = `<th class="sortable-header" data-sort="prompt">Prompt</th>` + models.map(m => `<th class="sortable-header text-center small" data-sort="${m}">${formatModelName(m).split(' ')[0]}</th>`).join('');
+  header.innerHTML = `<th class="sortable-header" data-sort="prompt">Prompt</th>` + models.map(m => `<th class="sortable-header text-center small" data-sort="${m}">${formatModelName(m)}</th>`).join('');
 
   // Body
   const tbody = document.getElementById('prompts-body');
@@ -725,7 +725,7 @@ function showPromptDetail(data, promptNum) {
       <div class="mb-2">
         <div class="d-flex justify-content-between align-items-center small mb-1">
           <span>${c.label} <span class="text-muted">(${c.weight})</span></span>
-          <span class="score-cell" style="padding: 0.25rem 0.5rem; font-size: 0.85rem; ${(() => { const s = getScoreStyle(c.value); return `background-color: ${s.backgroundColor}; color: ${s.color};`; })()}">${(c.value || 0).toFixed(1)}</span>
+          <span class="d-inline-flex align-items-center" style="gap: 0.15rem;"><small class="opacity-75">Avg</small><span class="score-cell" style="padding: 0.25rem 0.5rem; font-size: 0.85rem; ${(() => { const s = getScoreStyle(c.value); return `background-color: ${s.backgroundColor}; color: ${s.color};`; })()}">${(c.value || 0).toFixed(1)}</span></span>
         </div>
         <div class="progress" style="height: 6px;">
           <div class="progress-bar ${c.value >= 75 ? 'bg-success' : c.value >= 50 ? 'bg-warning' : 'bg-danger'}" 
@@ -804,9 +804,9 @@ function showPromptDetail(data, promptNum) {
         <div class="card h-100 model-card">
           <div class="card-header d-flex justify-content-between align-items-center">
             <strong>${formatModelName(model)}</strong>
-            <span class="badge ${scores.total_score >= 75 ? 'bg-success' : scores.total_score >= 50 ? 'bg-warning' : 'bg-danger'} fs-6">
+            <span class="d-inline-flex align-items-center" style="gap: 0.15rem;"><small class="opacity-75">Avg</small><span class="badge ${scores.total_score >= 75 ? 'bg-success' : scores.total_score >= 50 ? 'bg-warning' : 'bg-danger'} fs-6">
               ${(scores.total_score || 0).toFixed(1)}
-            </span>
+            </span></span>
           </div>
           <div class="card-body">
             <div class="mb-3 text-center">
